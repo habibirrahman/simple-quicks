@@ -65,7 +65,7 @@ const RoomChat = (props) => {
     useEffect(() => {
         if (props.chatContent.type === "private") {
             _handleSizeContainer("container-private");
-        } else if (props.chatContent.title.length > 71){
+        } else if (props.chatContent.title.length > 71) {
             _handleSizeContainer("container-long-title");
         }
     });
@@ -103,15 +103,11 @@ const RoomChat = (props) => {
                 <div className={sizeContainer}>
                     {chat.map((item, index) => (
                         <div key={index}>
-                            {console.log(item.date)}
                             {index > 0 && chat[index - 1].date !== item.date ? (
                                 <div className="date-separator">
                                     {item.date}
                                 </div>
-                            ) : (
-                                console.log("date sama")
-                            )}
-
+                            ) : null}
                             {item.new_message === true ? (
                                 <div className="red-separator">
                                     New Message
