@@ -48,9 +48,9 @@ const BubbleReceive = (props) => {
                         <div className="message">{props.item.message}</div>
                         <div className="time">{props.item.time}</div>
                     </div>
-                    <div className="menu">
+                    {/* <div className="menu">
                         <img src={ThreePoint} alt="Menu" />
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </React.Fragment>
@@ -131,8 +131,8 @@ const RoomChat = (props) => {
                         name="send-message"
                         placeholder="Type a new message"
                         style={{
-                            width: "580px",
-                            marginRight: "20px",
+                            width: "588px",
+                            marginRight: "13px",
                         }}
                         focus
                     />

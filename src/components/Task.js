@@ -17,7 +17,7 @@ const TaskCard = (props) => {
                         alt="InboxIcon"
                         onClick={() => {
                             setTimeout(() => {
-                                props.onOtherIcon("other-icon");
+                                props.onOtherIcon("other-icon-start");
                                 props.onBackIcon("back-menu-start");
                             }, 200);
                             setTimeout(() => {
@@ -34,10 +34,10 @@ const TaskCard = (props) => {
                     alt="Back"
                     onClick={() => {
                         setTimeout(() => {
-                            props.onOtherIcon("other-icon");
+                            props.onOtherIcon("other-icon-start");
                             props.onBackIcon("back-menu-start");
-                            props.onInboxCard("inbox-card");
-                            props.onTaskCard("task-card");
+                            props.onInboxCard("inbox-card-start");
+                            props.onTaskCard("task-card-start");
                         }, 200);
                         setTimeout(() => {
                             props.onMenuOpen(true);

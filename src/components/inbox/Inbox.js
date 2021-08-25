@@ -81,6 +81,33 @@ const group_messages = [
     },
 ];
 
+const private_messages = [
+    {
+        date: "June 08, 2021",
+        time: "19:32",
+        type: "recive",
+        sender: "FastVisa Support",
+        font_color: "#2F80ED",
+        color: "#F8F8F8",
+        to: "Claren",
+        message:
+            "Hey there. Welcome to your inbox! Contact us for more information and help about anything! We’ll send you a response as soon as possible.",
+        new_message: false,
+    },
+    {
+        date: "June 08, 2021",
+        time: "19:32",
+        type: "send",
+        sender: "Claren",
+        font_color: "#9B51E0",
+        color: "#EEDCFF",
+        to: "FastVisa Support",
+        message:
+            "Hey there. Welcome to your inbox! Contact us for more information and help about anything! We’ll send you a response as soon as possible.",
+        new_message: false,
+    },
+];
+
 const inboxDataDummy = [
     {
         profile: "ChatProfile",
@@ -123,7 +150,7 @@ const inboxDataDummy = [
         time: "01/06/2021 12:19",
         type: "private",
         read: false,
-        history_chat: group_messages,
+        history_chat: private_messages,
     },
     {
         profile: "ChatProfileSingle",
@@ -132,7 +159,7 @@ const inboxDataDummy = [
         time: "01/06/2021 12:19",
         type: "private",
         read: true,
-        history_chat: group_messages,
+        history_chat: private_messages,
     },
     {
         profile: "ChatProfileSingle",
@@ -141,7 +168,7 @@ const inboxDataDummy = [
         time: "01/06/2021 12:19",
         type: "private",
         read: true,
-        history_chat: group_messages,
+        history_chat: private_messages,
     },
     {
         profile: "ChatProfileSingle",
@@ -150,7 +177,7 @@ const inboxDataDummy = [
         time: "01/06/2021 12:19",
         type: "private",
         read: true,
-        history_chat: group_messages,
+        history_chat: private_messages,
     },
 ];
 
@@ -182,7 +209,7 @@ const Inbox = (props) => {
         setRoomChatShow(e);
         setChatContent(item);
     };
-    
+
     // every render
     useEffect(() => {
         _handleInboxData(inboxDataDummy);
@@ -228,7 +255,7 @@ const Inbox = (props) => {
                     alt="TaskIcon"
                     onClick={() => {
                         setTimeout(() => {
-                            props.onOtherIcon("other-icon");
+                            props.onOtherIcon("other-icon-start");
                             props.onBackIcon("back-menu-start");
                         }, 200);
                         setTimeout(() => {
@@ -249,10 +276,10 @@ const Inbox = (props) => {
                 alt="Back"
                 onClick={() => {
                     setTimeout(() => {
-                        props.onOtherIcon("other-icon");
+                        props.onOtherIcon("other-icon-start");
                         props.onBackIcon("back-menu-start");
-                        props.onInboxCard("inbox-card");
-                        props.onTaskCard("task-card");
+                        props.onInboxCard("inbox-card-start");
+                        props.onTaskCard("task-card-start");
                         _handleChatsLoaded(false);
                         _handleLoadingShow(true);
                     }, 200);

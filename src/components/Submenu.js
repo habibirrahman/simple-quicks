@@ -5,28 +5,28 @@ import InboxCard from "./inbox/Inbox.js";
 import TaskCard from "./Task.js";
 
 const Submenu = (props) => {
-    const [otherIcon, setOtherIcon] = useState("other-icon");
+    const [otherIcon, setOtherIcon] = useState("other-icon-start");
     const _handleOtherIcon = (e) => setOtherIcon(e);
     const [backIcon, setBackIcon] = useState("back-menu-start");
     const _handleBackIcon = (e) => setBackIcon(e);
-    const [inboxCard, setInboxCard] = useState("inbox-card");
+    const [inboxCard, setInboxCard] = useState("inbox-card-start");
     const _handleInboxCard = (e) => setInboxCard(e);
-    const [taskCard, setTaskCard] = useState("task-card");
+    const [taskCard, setTaskCard] = useState("task-card-start");
     const _handleTaskCard = (e) => setTaskCard(e);
 
     useEffect(() => {
         if (props.isSubmenuOpen === true) {
             const timer = setTimeout(() => {
-                _handleOtherIcon("other-icon-after");
+                _handleOtherIcon("other-icon");
                 _handleBackIcon("back-menu");
             }, 200);
             const timer2 = setTimeout(() => {
                 if (props.inboxOrTask === true) {
-                    _handleInboxCard("inbox-card-after");
+                    _handleInboxCard("inbox-card");
                     _handleTaskCard("task-card");
                 } else {
-                    _handleInboxCard("inbox-card");
-                    _handleTaskCard("task-card-after");
+                    _handleInboxCard("inbox-card-start");
+                    _handleTaskCard("task-card");
                 }
             }, 300);
             return () => {

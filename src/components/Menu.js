@@ -8,7 +8,7 @@ import TaskIcon from "../assets/task.svg";
 const Menu = (props) => {
     const [inboxStyle, setInboxStyle] = useState("inbox-start");
     const _handleInboxStyle = (e) => setInboxStyle(e);
-    const [taskStyle, setTaskStyle] = useState("task");
+    const [taskStyle, setTaskStyle] = useState("task-start");
     const _handleTaskStyle = (e) => setTaskStyle(e);
 
     useEffect(() => {
@@ -16,7 +16,7 @@ const Menu = (props) => {
             _handleInboxStyle("inbox");
         }, 100);
         const timer2 = setTimeout(() => {
-            _handleTaskStyle("task-after");
+            _handleTaskStyle("task");
         }, 300);
         return () => clearTimeout(timer, timer2);
     }, []);
@@ -31,7 +31,7 @@ const Menu = (props) => {
                     alt="TaskIcon"
                     onClick={() => {
                         setTimeout(() => {
-                            _handleTaskStyle("task");
+                            _handleTaskStyle("task-start");
                         }, 100);
                         setTimeout(() => {
                             _handleInboxStyle("inbox-start");
@@ -52,7 +52,7 @@ const Menu = (props) => {
                     alt="InboxIcon"
                     onClick={() => {
                         setTimeout(() => {
-                            _handleTaskStyle("task");
+                            _handleTaskStyle("task-start");
                         }, 100);
                         setTimeout(() => {
                             _handleInboxStyle("inbox-start");
@@ -72,7 +72,7 @@ const Menu = (props) => {
                 alt="Quicks"
                 onClick={() => {
                     setTimeout(() => {
-                        _handleTaskStyle("task");
+                        _handleTaskStyle("task-start");
                     }, 100);
                     setTimeout(() => {
                         _handleInboxStyle("inbox-start");
