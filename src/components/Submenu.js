@@ -1,37 +1,31 @@
 import React, { useState, useEffect } from "react";
 import "../App.css";
 
-import InboxCard from "./inbox/Inbox.js";
-import TaskCard from "./Task.js";
+import Inbox from "./inbox/Inbox.js";
+import Task from "./Task.js";
 
 const Submenu = (props) => {
     const [otherIcon, setOtherIcon] = useState("other-icon-start");
-    const _handleOtherIcon = (e) => setOtherIcon(e);
     const [backIcon, setBackIcon] = useState("back-menu-start");
-    const _handleBackIcon = (e) => setBackIcon(e);
     const [inboxCard, setInboxCard] = useState("inbox-card-start");
-    const _handleInboxCard = (e) => setInboxCard(e);
     const [taskCard, setTaskCard] = useState("task-card-start");
-    const _handleTaskCard = (e) => setTaskCard(e);
 
     useEffect(() => {
         if (props.isSubmenuOpen === true) {
-            const timer = setTimeout(() => {
-                _handleOtherIcon("other-icon");
-                _handleBackIcon("back-menu");
+            let timer = setTimeout(() => {
+                setOtherIcon("other-icon");
+                setBackIcon("back-menu");
             }, 200);
-            const timer2 = setTimeout(() => {
+            let timer2 = setTimeout(() => {
                 if (props.inboxOrTask === true) {
-                    _handleInboxCard("inbox-card");
-                    _handleTaskCard("task-card");
+                    setInboxCard("inbox-card");
+                    setTaskCard("task-card-start");
                 } else {
-                    _handleInboxCard("inbox-card-start");
-                    _handleTaskCard("task-card");
+                    setInboxCard("inbox-card-start");
+                    setTaskCard("task-card");
                 }
             }, 300);
-            return () => {
-                clearTimeout(timer, timer2);
-            };
+            return () => clearTimeout(timer, timer2);
         }
     });
 
@@ -39,33 +33,33 @@ const Submenu = (props) => {
         <React.Fragment>
             {props.inboxOrTask ? (
                 // inbox opened
-                <InboxCard
+                <Inbox
                     inboxCard={inboxCard}
                     otherIcon={otherIcon}
                     backIcon={backIcon}
                     inboxOrTask={props.inboxOrTask}
-                    onOtherIcon={_handleOtherIcon}
-                    onBackIcon={_handleBackIcon}
+                    onOtherIcon={setOtherIcon}
+                    onBackIcon={setBackIcon}
                     onMenuOpen={props.onMenuOpen}
                     onSubmenuOpen={props.onSubmenuOpen}
                     onInboxOrTask={props.onInboxOrTask}
-                    onInboxCard={_handleInboxCard}
-                    onTaskCard={_handleTaskCard}
+                    onInboxCard={setInboxCard}
+                    onTaskCard={setTaskCard}
                 />
             ) : (
                 // task opened
-                <TaskCard
+                <Task
                     taskCard={taskCard}
                     otherIcon={otherIcon}
                     backIcon={backIcon}
                     inboxOrTask={props.inboxOrTask}
-                    onOtherIcon={_handleOtherIcon}
-                    onBackIcon={_handleBackIcon}
+                    onOtherIcon={setOtherIcon}
+                    onBackIcon={setBackIcon}
                     onMenuOpen={props.onMenuOpen}
                     onSubmenuOpen={props.onSubmenuOpen}
                     onInboxOrTask={props.onInboxOrTask}
-                    onInboxCard={_handleInboxCard}
-                    onTaskCard={_handleTaskCard}
+                    onInboxCard={setInboxCard}
+                    onTaskCard={setTaskCard}
                 />
             )}
         </React.Fragment>

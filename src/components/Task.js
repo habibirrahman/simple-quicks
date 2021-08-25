@@ -1,15 +1,21 @@
 import React from "react";
 import "../App.css";
+import { Loader } from "semantic-ui-react";
 
 import InboxIcon from "../assets/inbox.svg";
 import TaskOpen from "../assets/task-open.svg";
 import BackIcon from "../assets/back.svg";
 
-const TaskCard = (props) => {
+const Task = (props) => {
     return (
         <React.Fragment>
             <div>
-                <div className={props.taskCard}>Task</div>
+                <div className={props.taskCard}>
+                    <Loader className="loading" active>
+                        Task Management Service <br />
+                        Coming Soon ...
+                    </Loader>
+                </div>
                 <div className={props.otherIcon}>
                     <img
                         src={InboxIcon}
@@ -51,4 +57,4 @@ const TaskCard = (props) => {
     );
 };
 
-export default TaskCard;
+export default Task;

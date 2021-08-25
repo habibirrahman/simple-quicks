@@ -7,16 +7,14 @@ import TaskIcon from "../assets/task.svg";
 
 const Menu = (props) => {
     const [inboxStyle, setInboxStyle] = useState("inbox-start");
-    const _handleInboxStyle = (e) => setInboxStyle(e);
     const [taskStyle, setTaskStyle] = useState("task-start");
-    const _handleTaskStyle = (e) => setTaskStyle(e);
 
     useEffect(() => {
-        const timer = setTimeout(() => {
-            _handleInboxStyle("inbox");
+        let timer = setTimeout(() => {
+            setInboxStyle("inbox");
         }, 100);
-        const timer2 = setTimeout(() => {
-            _handleTaskStyle("task");
+        let timer2 = setTimeout(() => {
+            setTaskStyle("task");
         }, 300);
         return () => clearTimeout(timer, timer2);
     }, []);
@@ -31,10 +29,10 @@ const Menu = (props) => {
                     alt="TaskIcon"
                     onClick={() => {
                         setTimeout(() => {
-                            _handleTaskStyle("task-start");
+                            setTaskStyle("task-start");
                         }, 100);
                         setTimeout(() => {
-                            _handleInboxStyle("inbox-start");
+                            setInboxStyle("inbox-start");
                         }, 300);
                         setTimeout(() => {
                             props.onMenuOpen(false);
@@ -52,10 +50,10 @@ const Menu = (props) => {
                     alt="InboxIcon"
                     onClick={() => {
                         setTimeout(() => {
-                            _handleTaskStyle("task-start");
+                            setTaskStyle("task-start");
                         }, 100);
                         setTimeout(() => {
-                            _handleInboxStyle("inbox-start");
+                            setInboxStyle("inbox-start");
                         }, 300);
                         setTimeout(() => {
                             props.onMenuOpen(false);
@@ -65,17 +63,16 @@ const Menu = (props) => {
                     }}
                 />
             </div>
-
             <img
                 src={QuicksIcon}
                 className="quicks"
                 alt="Quicks"
                 onClick={() => {
                     setTimeout(() => {
-                        _handleTaskStyle("task-start");
+                        setTaskStyle("task-start");
                     }, 100);
                     setTimeout(() => {
-                        _handleInboxStyle("inbox-start");
+                        setInboxStyle("inbox-start");
                     }, 300);
                     setTimeout(() => {
                         props.onStartQuicks(true);

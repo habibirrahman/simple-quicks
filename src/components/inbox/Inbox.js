@@ -13,7 +13,7 @@ const group_messages = [
     {
         date: "June 08, 2021",
         time: "19:32",
-        type: "recive",
+        type: "receive",
         sender: "Mary Hilda",
         font_color: "#E5A443",
         color: "#FCEED3",
@@ -36,7 +36,7 @@ const group_messages = [
     {
         date: "June 09, 2021",
         time: "19:32",
-        type: "recive",
+        type: "receive",
         sender: "Mary Hilda",
         font_color: "#E5A443",
         color: "#FCEED3",
@@ -60,7 +60,7 @@ const group_messages = [
     {
         date: "June 09, 2021",
         time: "19:32",
-        type: "recive",
+        type: "receive",
         sender: "Mary Hilda",
         font_color: "#E5A443",
         color: "#FCEED3",
@@ -71,7 +71,7 @@ const group_messages = [
     {
         date: "June 09, 2021",
         time: "19:32",
-        type: "recive",
+        type: "receive",
         sender: "Obaidullah Amarkhil",
         font_color: "#43B78D",
         color: "#D2F2EA",
@@ -85,7 +85,7 @@ const private_messages = [
     {
         date: "June 08, 2021",
         time: "19:32",
-        type: "recive",
+        type: "receive",
         sender: "FastVisa Support",
         font_color: "#2F80ED",
         color: "#F8F8F8",
@@ -103,7 +103,7 @@ const private_messages = [
         color: "#EEDCFF",
         to: "FastVisa Support",
         message:
-            "Hey there. Welcome to your inbox! Contact us for more information and help about anything! We’ll send you a response as soon as possible.",
+            "Hi, I need help with something can you help me ?",
         new_message: false,
     },
 ];
@@ -194,15 +194,11 @@ const SearchBar = (props) => {
 };
 
 const Inbox = (props) => {
+    const [isInboxShow, setInboxShow] = useState(true);
     const [isLoadingShow, setLoadingShow] = useState(true);
-    const _handleLoadingShow = (e) => setLoadingShow(e);
-
     const [isChatsLoaded, setChatsLoaded] = useState(false);
-    const _handleChatsLoaded = (e) => setChatsLoaded(e);
-
     const [inboxData, setInboxData] = useState([]);
     const _handleInboxData = (e) => setInboxData(e);
-
     const [isRoomChatShow, setRoomChatShow] = useState(false);
     const [chatContent, setChatContent] = useState([]);
     const _handleRoomChatShow = (e, item) => {
@@ -210,42 +206,49 @@ const Inbox = (props) => {
         setChatContent(item);
     };
 
-    // every render
     useEffect(() => {
         _handleInboxData(inboxDataDummy);
-        const timer = setTimeout(() => {
+        let timer = setTimeout(() => {
             if (props.inboxOrTask === true && isRoomChatShow === false) {
-                _handleLoadingShow(false);
-                _handleChatsLoaded(true);
+                setLoadingShow(false);
+                setChatsLoaded(true);
             }
         }, 1500);
-        return () => clearTimeout(timer);
+        return () => {
+            clearTimeout(timer);
+        };
     });
 
     return (
         <React.Fragment>
             {/* box of Inbox */}
-            <div className={props.inboxCard}>
-                <SearchBar />
-                {isLoadingShow ? (
-                    <Loader name="loading" active>
-                        Loading Chats ...
-                    </Loader>
-                ) : null}
-
-                {isChatsLoaded ? (
-                    <InboxItem
-                        onRoomChatShow={_handleRoomChatShow}
-                        inboxData={inboxData}
-                    />
-                ) : null}
-                {isRoomChatShow ? (
-                    <RoomChat
-                        onRoomChatShow={_handleRoomChatShow}
-                        chatContent={chatContent}
-                    />
-                ) : null}
-            </div>
+            {isInboxShow && (
+                <div className={props.inboxCard}>
+                    <div>
+                        <SearchBar />
+                        {isLoadingShow && (
+                            <Loader className="loading" active>
+                                Loading Chats ...
+                            </Loader>
+                        )}
+                        {isChatsLoaded && (
+                            <InboxItem
+                                inboxData={inboxData}
+                                onRoomChatShow={_handleRoomChatShow}
+                                onInboxShow={setInboxShow}
+                            />
+                        )}
+                    </div>
+                </div>
+            )}
+            {isRoomChatShow && (
+                <RoomChat
+                    isRoomChatShow={isRoomChatShow}
+                    chatContent={chatContent}
+                    onRoomChatShow={_handleRoomChatShow}
+                    onInboxShow={setInboxShow}
+                />
+            )}
 
             {/* other submenu */}
             <div className={props.otherIcon}>
@@ -262,8 +265,8 @@ const Inbox = (props) => {
                             props.onMenuOpen(false);
                             props.onSubmenuOpen(true);
                             props.onInboxOrTask(false);
-                            _handleChatsLoaded(false);
-                            _handleLoadingShow(true);
+                            setChatsLoaded(false);
+                            setLoadingShow(true);
                         }, 400);
                     }}
                 />
@@ -280,8 +283,8 @@ const Inbox = (props) => {
                         props.onBackIcon("back-menu-start");
                         props.onInboxCard("inbox-card-start");
                         props.onTaskCard("task-card-start");
-                        _handleChatsLoaded(false);
-                        _handleLoadingShow(true);
+                        setChatsLoaded(false);
+                        setLoadingShow(true);
                     }, 200);
                     setTimeout(() => {
                         props.onMenuOpen(true);

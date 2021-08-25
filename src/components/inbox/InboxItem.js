@@ -13,7 +13,10 @@ const InboxItem = (props) => {
                     <div key={index}>
                         <div
                             className="item"
-                            onClick={() => props.onRoomChatShow(true, item)}
+                            onClick={() => {
+                                props.onRoomChatShow(true, item);
+                                // props.onInboxShow(false);
+                            }}
                         >
                             {item.type === "group" ? (
                                 <div className="profile">
@@ -21,24 +24,27 @@ const InboxItem = (props) => {
                                 </div>
                             ) : (
                                 <div className="profile">
-                                    <img src={ChatProfilePrivate} alt="Profile" />
+                                    <img
+                                        src={ChatProfilePrivate}
+                                        alt="Profile"
+                                    />
                                 </div>
                             )}
 
                             <div className="content">
                                 <div className="title">{item.title}</div>
-                                {item.type === "group" ? (
+                                {item.type === "group" && (
                                     <div className="sender">
                                         {item.last_sender} :
                                     </div>
-                                ) : null}
+                                )}
                                 <div className="message">
                                     {item.last_message}
                                 </div>
                             </div>
                             <div className="info">
                                 <div className="time">{item.time}</div>
-                                {item.read ? null : (
+                                {!item.read && (
                                     <img src={ChatAlert} alt="Alert" />
                                 )}
                             </div>
