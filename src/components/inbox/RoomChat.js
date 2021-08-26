@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../../App.css";
-import { Input, Button, Loader } from "semantic-ui-react";
+import { Input, Button, Loader, Form } from "semantic-ui-react";
 
 import ChatBack from "../../assets/chat-back.svg";
 import ChatClose from "../../assets/chat-close.svg";
@@ -261,6 +261,8 @@ const RoomChat = (props) => {
                             </div>
                         )}
                         <div className="chat-footer">
+                        <Form>
+
                             <Input
                                 focus
                                 type="text"
@@ -284,6 +286,7 @@ const RoomChat = (props) => {
                             >
                                 Send
                             </Button>
+                        </Form>
                         </div>
                     </div>
                 )}

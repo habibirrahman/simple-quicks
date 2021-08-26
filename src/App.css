@@ -147,6 +147,7 @@
  }
 
  .task-card-start {
+   padding: 24px 32px;
    background-color: #FFFFFF;
    width: 720px;
    height: 240px;
@@ -158,6 +159,7 @@
  }
 
  .task-card {
+   padding: 24px 32px;
    background-color: #FFFFFF;
    width: 720px;
    height: 640px;
