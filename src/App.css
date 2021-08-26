@@ -564,6 +564,30 @@
 
  /* SendChat */
 
+ .chat-connecting {
+   padding: 0 15px;
+   display: flex;
+   align-items: center;
+   flex-direction: row;
+   background-color: #E9F3FF;
+   width: 664px;
+   height: 54px;
+   position: absolute;
+   bottom: 76px;
+   left: 24px;
+ }
+
+ .chat-connecting .info {
+   font-size: 14px;
+   font-style: normal;
+   font-weight: 700;
+   line-height: 17px;
+   letter-spacing: 0em;
+   text-align: left;
+   margin: auto;
+   margin-left: 15px;
+ }
+
  .chat-footer {
    background-color: #FFFFFF;
    position: absolute;

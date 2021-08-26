@@ -15,7 +15,6 @@ const InboxItem = (props) => {
                             className="item"
                             onClick={() => {
                                 props.onRoomChatShow(true, item);
-                                // props.onInboxShow(false);
                             }}
                         >
                             {item.type === "group" ? (

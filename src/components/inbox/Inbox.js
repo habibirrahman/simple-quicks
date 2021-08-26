@@ -235,7 +235,6 @@ const Inbox = (props) => {
                             <InboxItem
                                 inboxData={inboxData}
                                 onRoomChatShow={_handleRoomChatShow}
-                                onInboxShow={setInboxShow}
                             />
                         )}
                     </div>

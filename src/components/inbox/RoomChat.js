@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../../App.css";
-import { Input, Button } from "semantic-ui-react";
+import { Input, Button, Loader } from "semantic-ui-react";
 
 import ChatBack from "../../assets/chat-back.svg";
 import ChatClose from "../../assets/chat-close.svg";
@@ -85,14 +85,24 @@ const RoomChat = (props) => {
     const [roomChat, setRoomChat] = useState("room-chat-start");
     const [isShowContent, setShowContent] = useState(false);
     const [sizeContainer, setSizeContainer] = useState("container");
+    const [isChatConnected, setChatConnected] = useState(true);
+
     const _hanleSizeContainer = (e) => setSizeContainer(e);
     const [chat, setChat] = useState(props.chatContent.history_chat);
     const [messageInput, setMessageInput] = useState("");
 
     const clearState = () => {
-        setSizeContainer("container");
-        setChat(props.chatContent.history_chat);
         setMessageInput("");
+        setChat(props.chatContent.history_chat);
+        setTimeout(() => {
+            setShowContent(false);
+            setRoomChat("room-chat-start");
+        }, 100);
+        setTimeout(() => {
+            setChatConnected(true);
+            props.onInboxShow(true);
+            props.onRoomChatShow(false, []);
+        }, 400);
     };
 
     const _handleChangeReadAllMessage = (e) => {
@@ -113,10 +123,7 @@ const RoomChat = (props) => {
         setMessageInput(e.target.value);
     };
 
-    const _handleSend = (e) => {
-        if (messageInput === "") {
-            return;
-        }
+    const getSendingTime = () => {
         let today = new Date();
         let month = monthNames[today.getMonth()];
         let date = month + " " + today.getDate() + ", " + today.getFullYear();
@@ -125,10 +132,17 @@ const RoomChat = (props) => {
             minutes = "0" + today.getMinutes();
         }
         let time = today.getHours() + ":" + minutes;
+        return { date: date, time: time };
+    };
 
+    const _handleSending = (e) => {
+        if (messageInput === "") {
+            return;
+        }
+        let sendingTime = getSendingTime();
         let send_message = {
-            date: date,
-            time: time,
+            date: sendingTime.date,
+            time: sendingTime.time,
             type: "send",
             sender: "Claren",
             font_color: "#9B51E0",
@@ -155,7 +169,10 @@ const RoomChat = (props) => {
             let timer2 = setTimeout(() => {
                 setShowContent(true);
             }, 500);
-            return () => clearTimeout(timer, timer2);
+            let timer3 = setTimeout(() => {
+                setChatConnected(false);
+            }, 2000);
+            return () => clearTimeout(timer, timer2, timer3);
         }
     });
 
@@ -168,15 +185,7 @@ const RoomChat = (props) => {
                             <div
                                 className="back"
                                 onClick={() => {
-                                    setTimeout(() => {
-                                        setShowContent(false);
-                                        setRoomChat("room-chat-start");
-                                    }, 100);
-                                    setTimeout(() => {
-                                        props.onRoomChatShow(false, []);
-                                        props.onInboxShow(true);
-                                        clearState();
-                                    }, 400);
+                                    clearState();
                                 }}
                             >
                                 <img src={ChatBack} alt="ChatBack" />
@@ -195,8 +204,6 @@ const RoomChat = (props) => {
                             <div
                                 className="close"
                                 onClick={() => {
-                                    props.onRoomChatShow(false, []);
-                                    props.onInboxShow(true);
                                     clearState();
                                 }}
                             >
@@ -239,13 +246,27 @@ const RoomChat = (props) => {
                                 </div>
                             ))}
                         </div>
+                        {isChatConnected && (
+                            <div className="chat-connecting">
+                                <Loader
+                                    size="small"
+                                    active
+                                    inline
+                                    color="#2F80ED"
+                                />
+                                <div className="info">
+                                    Please wait while we connect you with one of
+                                    our team ...
+                                </div>
+                            </div>
+                        )}
                         <div className="chat-footer">
                             <Input
                                 focus
                                 type="text"
                                 placeholder="Type a new message"
                                 style={{
-                                    width: "588px",
+                                    width: "580px",
                                     marginRight: "13px",
                                 }}
                                 value={messageInput}
@@ -259,7 +280,7 @@ const RoomChat = (props) => {
                                     padding: "12.3px 20px",
                                     margin: "0",
                                 }}
-                                onClick={_handleSend}
+                                onClick={_handleSending}
                             >
                                 Send
                             </Button>
