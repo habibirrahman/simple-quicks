@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../App.css";
 
 import Inbox from "./inbox/Inbox.js";
-import Task from "./Task.js";
+import Task from "./task/Task.js";
 
 const Submenu = (props) => {
     const [otherIcon, setOtherIcon] = useState("other-icon-start");

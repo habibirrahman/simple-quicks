@@ -646,6 +646,19 @@
    text-align: left;
  }
 
+ .task-content .title-checked {
+   margin: 0 0 0 22px;
+   width: 356px;
+   font-size: 16px;
+   font-style: normal;
+   font-weight: 700;
+   line-height: 19px;
+   letter-spacing: 0em;
+   text-align: left;
+   text-decoration: line-through;
+   color: #828282
+ }
+
  .task-content .info .right {
    display: flex;
    font-size: 14px;
@@ -673,8 +686,9 @@
    cursor: pointer;
  }
 
- .task-content .detail {
+ .task-content .details {
    margin: 17px 0 0 38px;
+   transition: all 100ms;
  }
 
  .task-content .date-info {
