@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "../../App.css";
-import { Input, Button, Loader, Form } from "semantic-ui-react";
+import { Input, Button, Loader } from "semantic-ui-react";
 
 import ChatBack from "../../assets/chat-back.svg";
 import ChatClose from "../../assets/chat-close.svg";
 import ThreePoint from "../../assets/three-point.svg";
 import RedDownArrow from "../../assets/red-down-arrow.svg";
 
-const monthNames = [
+const monthNames = () => [
     "January",
     "February",
     "March",
@@ -84,27 +84,22 @@ const BubbleReceive = (props) => {
 const RoomChat = (props) => {
     const [roomChat, setRoomChat] = useState("room-chat-start");
     const [isShowContent, setShowContent] = useState(false);
-    const [sizeContainer, setSizeContainer] = useState("container");
     const [isChatConnected, setChatConnected] = useState(true);
 
-    const _hanleSizeContainer = (e) => setSizeContainer(e);
     const [chat, setChat] = useState(props.chatItem.history_chat);
     const [messageInput, setMessageInput] = useState("");
 
-    const clearState = () => {
-        setMessageInput("");
-        setChat(props.chatItem.history_chat);
-        setTimeout(() => {
-            setShowContent(false);
-            setRoomChat("room-chat-start");
-        }, 100);
-        setTimeout(() => {
-            setChatConnected(true);
-            props.onRoomChatShow(false, []);
-        }, 400);
+    const sizeContainer = () => {
+        if (props.chatItem.type === "private") {
+            return "container-private";
+        } else if (props.chatItem.title.length > 71) {
+            return "container-long-title";
+        } else {
+            return "container";
+        }
     };
 
-    const _handleChangeReadAllMessage = (e) => {
+    const _handleReadAllMessage = (e) => {
         // eslint-disable-next-line array-callback-return
         chat.map((item, index) => {
             if (item.new_message === true) {
@@ -118,13 +113,27 @@ const RoomChat = (props) => {
         });
     };
 
+    const clearState = () => {
+        setMessageInput("");
+        setChat(props.chatItem.history_chat);
+        _handleReadAllMessage();
+        setTimeout(() => {
+            setShowContent(false);
+            setRoomChat("room-chat-start");
+        }, 100);
+        setTimeout(() => {
+            setChatConnected(true);
+            props.onRoomChatShow(false, []);
+        }, 400);
+    };
+
     const _handleChangeInput = (e) => {
         setMessageInput(e.target.value);
     };
 
     const getSendingTime = () => {
         let today = new Date();
-        let month = monthNames[today.getMonth()];
+        let month = monthNames()[today.getMonth()];
         let date = month + " " + today.getDate() + ", " + today.getFullYear();
         var minutes = today.getMinutes();
         if (today.getMinutes().length === 1) {
@@ -151,24 +160,19 @@ const RoomChat = (props) => {
             new_message: false,
         };
         setMessageInput("");
-        _handleChangeReadAllMessage();
+        _handleReadAllMessage();
         setChat([...chat, send_message]);
     };
 
     useEffect(() => {
-        if (props.chatItem.type === "private") {
-            _hanleSizeContainer("container-private");
-        } else if (props.chatItem.title.length > 71) {
-            _hanleSizeContainer("container-long-title");
-        }
         if (props.isRoomChatShow === true) {
-            let timer = setTimeout(() => {
+            var timer = setTimeout(() => {
                 setRoomChat("room-chat");
             }, 300);
-            let timer2 = setTimeout(() => {
+            var timer2 = setTimeout(() => {
                 setShowContent(true);
             }, 500);
-            let timer3 = setTimeout(() => {
+            var timer3 = setTimeout(() => {
                 setChatConnected(false);
             }, 2000);
             return () => clearTimeout(timer, timer2, timer3);
@@ -210,7 +214,7 @@ const RoomChat = (props) => {
                             </div>
                         </div>
                         <hr className="devider" />
-                        <div className={sizeContainer}>
+                        <div className={sizeContainer()}>
                             {chat.map((item, index) => (
                                 <div className="bubble-chat" key={index}>
                                     {index === 0 ||
@@ -260,32 +264,30 @@ const RoomChat = (props) => {
                             </div>
                         )}
                         <div className="chat-footer">
-                        <Form>
-
-                            <Input
-                                focus
-                                type="text"
-                                placeholder="Type a new message"
-                                style={{
-                                    width: "580px",
-                                    marginRight: "13px",
-                                }}
-                                value={messageInput}
-                                onChange={_handleChangeInput}
-                                ref={null}
-                            />
-                            <Button
-                                primary
-                                type="submit"
-                                style={{
-                                    padding: "12.3px 20px",
-                                    margin: "0",
-                                }}
-                                onClick={_handleSending}
-                            >
-                                Send
-                            </Button>
-                        </Form>
+                            <form>
+                                <Input
+                                    focus
+                                    type="text"
+                                    placeholder="Type a new message"
+                                    style={{
+                                        width: "580px",
+                                        marginRight: "13px",
+                                    }}
+                                    value={messageInput}
+                                    onChange={_handleChangeInput}
+                                />
+                                <Button
+                                    primary
+                                    type="submit"
+                                    style={{
+                                        padding: "12.3px 20px",
+                                        margin: "0",
+                                    }}
+                                    onClick={_handleSending}
+                                >
+                                    Send
+                                </Button>
+                            </form>
                         </div>
                     </div>
                 )}

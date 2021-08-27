@@ -12,8 +12,10 @@ const InboxItem = (props) => {
     const [chatItem, setChatItem] = useState([]);
     const _handleRoomChatShow = (e, item) => {
         setRoomChatShow(e);
+        item.read = true;
         setChatItem(item);
     };
+
     return (
         <React.Fragment>
             <div className="inbox-container">

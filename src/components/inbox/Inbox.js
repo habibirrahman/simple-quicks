@@ -8,7 +8,7 @@ import TaskIcon from "../../assets/task.svg";
 import InboxOpen from "../../assets/inbox-open.svg";
 import BackIcon from "../../assets/back.svg";
 
-const group_messages = [
+const group_messages = () => [
     {
         date: "June 08, 2021",
         time: "19:32",
@@ -80,7 +80,7 @@ const group_messages = [
     },
 ];
 
-const private_messages = [
+const private_messages = () => [
     {
         date: "June 08, 2021",
         time: "19:32",
@@ -106,7 +106,7 @@ const private_messages = [
     },
 ];
 
-const inboxDataDummy = [
+const inboxDataDummy = () => [
     {
         profile: "ChatProfile",
         title: "I-589 - AMARKHIL, Obaidullah [Affirmative Filing with ZHN]",
@@ -116,7 +116,7 @@ const inboxDataDummy = [
         type: "group",
         participant: 3,
         read: false,
-        history_chat: group_messages,
+        history_chat: group_messages(),
     },
     {
         profile: "ChatProfile",
@@ -126,8 +126,8 @@ const inboxDataDummy = [
         time: "02/06/2021 10:45",
         type: "group",
         participant: 4,
-        read: true,
-        history_chat: group_messages,
+        read: false,
+        history_chat: group_messages(),
     },
     {
         profile: "ChatProfile",
@@ -138,8 +138,8 @@ const inboxDataDummy = [
         time: "01/06/2021 12:19",
         type: "group",
         participant: 5,
-        read: true,
-        history_chat: group_messages,
+        read: false,
+        history_chat: group_messages(),
     },
     {
         profile: "ChatProfileSingle",
@@ -148,7 +148,7 @@ const inboxDataDummy = [
         time: "01/06/2021 12:19",
         type: "private",
         read: false,
-        history_chat: private_messages,
+        history_chat: private_messages(),
     },
     {
         profile: "ChatProfileSingle",
@@ -156,26 +156,8 @@ const inboxDataDummy = [
         last_message: "Hey there! Welcome to your inbox.",
         time: "01/06/2021 12:19",
         type: "private",
-        read: true,
-        history_chat: private_messages,
-    },
-    {
-        profile: "ChatProfileSingle",
-        title: "FastVisa Support",
-        last_message: "Hey there! Welcome to your inbox.",
-        time: "01/06/2021 12:19",
-        type: "private",
-        read: true,
-        history_chat: private_messages,
-    },
-    {
-        profile: "ChatProfileSingle",
-        title: "FastVisa Support",
-        last_message: "Hey there! Welcome to your inbox.",
-        time: "01/06/2021 12:19",
-        type: "private",
-        read: true,
-        history_chat: private_messages,
+        read: false,
+        history_chat: private_messages(),
     },
 ];
 
@@ -219,7 +201,9 @@ const Inbox = (props) => {
                             Loading Chats ...
                         </Loader>
                     )}
-                    {isChatsLoaded && <InboxItem inboxData={inboxDataDummy} />}
+                    {isChatsLoaded && (
+                        <InboxItem inboxData={inboxDataDummy()} />
+                    )}
                 </div>
             </div>
 
