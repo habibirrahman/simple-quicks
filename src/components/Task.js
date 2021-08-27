@@ -7,7 +7,7 @@ import TaskOpen from "../assets/task-open.svg";
 import BackIcon from "../assets/back.svg";
 
 import ExpandUp from "../assets/expand-up.svg";
-// import ExpandDown from "../assets/expand-down.svg";
+import ExpandDown from "../assets/expand-down.svg";
 import ThreePoint from "../assets/three-point.svg";
 import Clock from "../assets/clock.svg";
 import Calendar from "../assets/calendar.svg";
@@ -31,9 +31,68 @@ const getOptions = () => [
     },
 ];
 
+const TaskItem = (props) => {
+    const [expandButton, setExpandButton] = useState(false);
+    return (
+        <React.Fragment>
+            <div className="item">
+                <div className="info">
+                    <div className="left">
+                        <Checkbox
+                            style={{ marginTop: "1px" }}
+                            // onChange={}
+                            // onClick={}
+                        />
+                        <div className="title">
+                            Set up documentation report for several Cases : Case
+                            145443, Case 192829 and Case 182203
+                        </div>
+                    </div>
+                    <div className="right">
+                        <div className="limit">4 Days Left</div>
+                        <div className="date">14/06/2021</div>
+                        <img
+                            className="expand"
+                            src={expandButton ? ExpandUp : ExpandDown}
+                            alt="ExpandButton"
+                            onClick={() => setExpandButton(!expandButton)}
+                        />
+                        <img className="menu" src={ThreePoint} alt="Menu" />
+                    </div>
+                </div>
+                {expandButton && (
+                    <div className="detail">
+                        <div className="date-info">
+                            <img className="clock" src={Clock} alt="Clock" />
+                            <div className="set-date">
+                                <div className="date-value">14/06/2021</div>
+                                <img src={Calendar} alt="Calendar" />
+                            </div>
+                        </div>
+                        <div className="description">
+                            <img src={Pen} alt="Pen" />
+                            <div className="set-description">
+                                Closing off this case since this application has
+                                been cancelled. No one really understand how
+                                this case could possibly be cancelled. The
+                                options and the documents within this document
+                                were totally a guaranteed for a success!
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                <hr className="devider" />
+            </div>
+        </React.Fragment>
+    );
+};
+
 const Task = (props) => {
     const [isTaskContentShow, setTaskContentShow] = useState(false);
     const [dropdownValue, setDropdownValue] = useState(getOptions()[0].text);
+    // expandButton = false: close, true: open
+
     // const [isContentShow, setContentShow] = useState(false);
     const _handleChangeDropdown = (e, { value }) => {
         setDropdownValue(value);
@@ -49,6 +108,7 @@ const Task = (props) => {
         }, 300);
         return () => clearTimeout(timer);
     });
+
     return (
         <React.Fragment>
             {/* box of task */}
@@ -77,67 +137,8 @@ const Task = (props) => {
                 </Loader> */}
                 {isTaskContentShow && (
                     <div className="task-content">
-                        <div className="item">
-                            <div className="info">
-                                <div className="left">
-                                    <Checkbox
-                                        style={{ marginTop: "1px" }}
-                                        // onChange={}
-                                        // onClick={}
-                                    />
-                                    <div className="title">
-                                        Set up documentation report for several
-                                        Cases : Case 145443, Case 192829 and
-                                        Case 182203
-                                    </div>
-                                </div>
-                                <div className="right">
-                                    <div className="limit">4 Days Left</div>
-                                    <div className="date">14/06/2021</div>
-                                    <img
-                                        className="details"
-                                        src={ExpandUp}
-                                        alt="ExpandUp"
-                                    />
-                                    <img
-                                        className="menu"
-                                        src={ThreePoint}
-                                        alt="Menu"
-                                    />
-                                </div>
-                            </div>
-                            <div className="action">
-                                <div className="date-info">
-                                    <img
-                                        className="clock"
-                                        src={Clock}
-                                        alt="Clock"
-                                    />
-                                    <div className="set-date">
-                                        <div className="date-value">
-                                            14/06/2021
-                                        </div>
-                                        <img
-                                            className="calendar-icon"
-                                            src={Calendar}
-                                            alt="Calendar"
-                                        />
-                                    </div>
-                                </div>
-                                <div className="description">
-                                    <img className="pen" src={Pen} alt="Pen" />
-                                    <div className="set-description">
-                                        Closing off this case since this
-                                        application has been cancelled. No one
-                                        really understand how this case could
-                                        possibly be cancelled. The options and
-                                        the documents within this document were
-                                        totally a guaranteed for a success!
-                                    </div>
-                                </div>
-                            </div>
-                            <hr className="devider" />
-                        </div>
+                        <TaskItem />
+                        <TaskItem />
                     </div>
                 )}
             </div>

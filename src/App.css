@@ -619,7 +619,7 @@
  }
 
  .task-content {
-   margin: 20px 0 0 0;
+   margin: 22px 0 0 0;
    padding: 0 10px 0 0;
    width: 676px;
    height: 530px;
@@ -666,7 +666,7 @@
    margin: 0 10px 0 0;
  }
 
- .task-content .details {
+ .task-content .expand {
    margin: 0 10px 0 0;
    cursor: pointer;
  }
@@ -675,7 +675,7 @@
    cursor: pointer;
  }
 
- .task-content .action {
+ .task-content .detail {
    margin: 17px 0 0 38px;
  }
 
@@ -704,6 +704,7 @@
 
  .task-content .set-date img {
    width: 16px;
+   margin: 0
  }
 
  .task-content .description {
