@@ -88,19 +88,18 @@ const RoomChat = (props) => {
     const [isChatConnected, setChatConnected] = useState(true);
 
     const _hanleSizeContainer = (e) => setSizeContainer(e);
-    const [chat, setChat] = useState(props.chatContent.history_chat);
+    const [chat, setChat] = useState(props.chatItem.history_chat);
     const [messageInput, setMessageInput] = useState("");
 
     const clearState = () => {
         setMessageInput("");
-        setChat(props.chatContent.history_chat);
+        setChat(props.chatItem.history_chat);
         setTimeout(() => {
             setShowContent(false);
             setRoomChat("room-chat-start");
         }, 100);
         setTimeout(() => {
             setChatConnected(true);
-            props.onInboxShow(true);
             props.onRoomChatShow(false, []);
         }, 400);
     };
@@ -157,9 +156,9 @@ const RoomChat = (props) => {
     };
 
     useEffect(() => {
-        if (props.chatContent.type === "private") {
+        if (props.chatItem.type === "private") {
             _hanleSizeContainer("container-private");
-        } else if (props.chatContent.title.length > 71) {
+        } else if (props.chatItem.title.length > 71) {
             _hanleSizeContainer("container-long-title");
         }
         if (props.isRoomChatShow === true) {
@@ -192,11 +191,11 @@ const RoomChat = (props) => {
                             </div>
                             <div className="info">
                                 <div className="title">
-                                    {props.chatContent.title}
+                                    {props.chatItem.title}
                                 </div>
-                                {props.chatContent.type === "group" && (
+                                {props.chatItem.type === "group" && (
                                     <div className="participant">
-                                        {props.chatContent.participant}{" "}
+                                        {props.chatItem.participant}{" "}
                                         Participants
                                     </div>
                                 )}

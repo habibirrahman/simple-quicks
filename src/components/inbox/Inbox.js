@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import "../../App.css";
 import { Input, Loader } from "semantic-ui-react";
 
-import RoomChat from "./RoomChat.js";
 import InboxItem from "./InboxItem.js";
 
 import TaskIcon from "../../assets/task.svg";
@@ -102,8 +101,7 @@ const private_messages = [
         font_color: "#9B51E0",
         color: "#EEDCFF",
         to: "FastVisa Support",
-        message:
-            "Hi, I need help with something can you help me ?",
+        message: "Hi, I need help with something can you help me ?",
         new_message: false,
     },
 ];
@@ -194,22 +192,13 @@ const SearchBar = (props) => {
 };
 
 const Inbox = (props) => {
-    const [isInboxShow, setInboxShow] = useState(true);
     const [isLoadingShow, setLoadingShow] = useState(true);
     const [isChatsLoaded, setChatsLoaded] = useState(false);
-    const [inboxData, setInboxData] = useState([]);
-    const _handleInboxData = (e) => setInboxData(e);
-    const [isRoomChatShow, setRoomChatShow] = useState(false);
-    const [chatContent, setChatContent] = useState([]);
-    const _handleRoomChatShow = (e, item) => {
-        setRoomChatShow(e);
-        setChatContent(item);
-    };
+    // const [inboxData, setInboxData] = useState(inboxDataDummy);
 
     useEffect(() => {
-        _handleInboxData(inboxDataDummy);
         let timer = setTimeout(() => {
-            if (props.inboxOrTask === true && isRoomChatShow === false) {
+            if (props.inboxOrTask === true) {
                 setLoadingShow(false);
                 setChatsLoaded(true);
             }
@@ -222,32 +211,17 @@ const Inbox = (props) => {
     return (
         <React.Fragment>
             {/* box of Inbox */}
-            {isInboxShow && (
-                <div className={props.inboxCard}>
-                    <div>
-                        <SearchBar />
-                        {isLoadingShow && (
-                            <Loader className="loading" active>
-                                Loading Chats ...
-                            </Loader>
-                        )}
-                        {isChatsLoaded && (
-                            <InboxItem
-                                inboxData={inboxData}
-                                onRoomChatShow={_handleRoomChatShow}
-                            />
-                        )}
-                    </div>
+            <div className={props.inboxCard}>
+                <div>
+                    <SearchBar />
+                    {isLoadingShow && (
+                        <Loader className="loading" active>
+                            Loading Chats ...
+                        </Loader>
+                    )}
+                    {isChatsLoaded && <InboxItem inboxData={inboxDataDummy} />}
                 </div>
-            )}
-            {isRoomChatShow && (
-                <RoomChat
-                    isRoomChatShow={isRoomChatShow}
-                    chatContent={chatContent}
-                    onRoomChatShow={_handleRoomChatShow}
-                    onInboxShow={setInboxShow}
-                />
-            )}
+            </div>
 
             {/* other submenu */}
             <div className={props.otherIcon}>
