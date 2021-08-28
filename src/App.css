@@ -436,7 +436,7 @@
    margin: 9px;
  }
 
- .chat-send .content .menu img{
+ .chat-send .content .menu img {
    cursor: pointer;
  }
 
@@ -466,10 +466,8 @@
  }
 
  .chat-menu .delete {
+   margin: 11px 17px;
    color: #EB5757;
-   margin-top: 11px;
-   margin-bottom: 11px;
-   margin-left: 17px;
    cursor: pointer;
  }
 
@@ -715,10 +713,31 @@
 
  .task-content .expand {
    margin: 0 10px 0 0;
+ }
+
+ .task-content .right img {
    cursor: pointer;
  }
 
- .task-content .menu {
+ .task-content .task-menu {
+   margin: 6px 0 0 0;
+   border: 1px solid #BDBDBD;
+   border-radius: 5px;
+   position: absolute;
+   right: 32px;
+   background-color: #FFFFFF;
+   width: 126px;
+   font-size: 16px;
+   font-style: normal;
+   font-weight: 400;
+   line-height: 19px;
+   letter-spacing: 0em;
+   text-align: left;
+ }
+
+ .task-content .task-menu .delete {
+   margin: 11px 17px;
+   color: #EB5757;
    cursor: pointer;
  }
 
@@ -749,6 +768,7 @@
    border-radius: 5px;
    cursor: pointer;
  }
+
 
  .task-content .set-date img {
    width: 16px;

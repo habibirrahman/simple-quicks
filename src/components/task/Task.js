@@ -8,12 +8,21 @@ import InboxIcon from "../../assets/inbox.svg";
 import TaskOpen from "../../assets/task-open.svg";
 import BackIcon from "../../assets/back.svg";
 
+// const taskDataDummy = () => [
+//     {
+//         title: null,
+//         dateline: null,
+//         description: null,
+//         completed: false,
+//         type: "My Tasks",
+//     },
+// ];
 
 const getOptions = () => [
     {
         key: 1,
-        text: "My Task",
-        value: "My Task",
+        text: "My Tasks",
+        value: "My Tasks",
     },
     {
         key: 2,
@@ -26,8 +35,6 @@ const getOptions = () => [
         value: "Urgent To-Do",
     },
 ];
-
-
 
 const Task = (props) => {
     const [isTaskContentShow, setTaskContentShow] = useState(false);
@@ -78,6 +85,7 @@ const Task = (props) => {
                 </Loader> */}
                 {isTaskContentShow && (
                     <div className="task-content">
+                        <TaskItem />
                         <TaskItem />
                         <TaskItem />
                     </div>
