@@ -27,7 +27,7 @@ const Submenu = (props) => {
             }, 300);
             return () => clearTimeout(timer, timer2);
         }
-    });
+    }, [props.isSubmenuOpen, props.inboxOrTask]);
 
     return (
         <React.Fragment>

@@ -130,7 +130,7 @@ const RoomChat = (props) => {
     const [isShowContent, setShowContent] = useState(false);
     const [isChatConnected, setChatConnected] = useState(true);
     const [chat, setChat] = useState(props.chatItem.history_chat);
-    const [messageInput, setMessageInput] = useState(null);
+    const [messageInput, setMessageInput] = useState("");
     const sizeContainer = () => {
         if (props.chatItem.type === "private") {
             return "container-private";

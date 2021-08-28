@@ -196,7 +196,7 @@ const Inbox = (props) => {
         return () => {
             clearTimeout(timer);
         };
-    });
+    }, [props.inboxOrTask]);
 
     return (
         <React.Fragment>

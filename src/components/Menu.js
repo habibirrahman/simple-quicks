@@ -17,7 +17,7 @@ const Menu = (props) => {
             setTaskStyle("task");
         }, 300);
         return () => clearTimeout(timer, timer2);
-    }, []);
+    });
 
     return (
         <React.Fragment>
