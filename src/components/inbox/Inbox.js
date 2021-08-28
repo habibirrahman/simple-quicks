@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../../App.css";
-import { Input, Loader } from "semantic-ui-react";
+import { Input, Loader, Form } from "semantic-ui-react";
 
 import InboxItem from "./InboxItem.js";
 
@@ -162,13 +162,21 @@ const inboxDataDummy = () => [
 ];
 
 const SearchBar = (props) => {
+    // const [results, setResult] = useState("");
     return (
         <React.Fragment>
-            <div className="search">
-                <header>
-                    <Input icon="search" fluid focus placeholder="Search" />
-                </header>
-            </div>
+            <Form>
+                <Input
+                    fluid
+                    focus
+                    icon="search"
+                    className="search"
+                    placeholder="Search"
+                    onChange={(e) => {
+                        console.log("search results : " + e.target.value);
+                    }}
+                />
+            </Form>
         </React.Fragment>
     );
 };
@@ -176,7 +184,7 @@ const SearchBar = (props) => {
 const Inbox = (props) => {
     const [isLoadingShow, setLoadingShow] = useState(true);
     const [isChatsLoaded, setChatsLoaded] = useState(false);
-    // const [inboxData, setInboxData] = useState(inboxDataDummy);
+    // const [inboxData, setInboxData] = useState(inboxDataDummy());
 
     useEffect(() => {
         let timer = setTimeout(() => {
@@ -195,7 +203,7 @@ const Inbox = (props) => {
             {/* box of Inbox */}
             <div className={props.inboxCard}>
                 <div>
-                    <SearchBar />
+                    <SearchBar data={inboxDataDummy()} />
                     {isLoadingShow && (
                         <Loader className="loading" active>
                             Loading Chats ...

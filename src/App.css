@@ -434,6 +434,42 @@
 
  .chat-send .content .menu {
    margin: 9px;
+ }
+
+ .chat-send .content .menu img{
+   cursor: pointer;
+ }
+
+ .chat-send .chat-menu {
+   border: 1px solid #BDBDBD;
+   border-radius: 5px;
+   position: absolute;
+   background-color: #FFFFFF;
+   width: 126px;
+   font-size: 16px;
+   font-style: normal;
+   font-weight: 400;
+   line-height: 19px;
+   letter-spacing: 0em;
+   text-align: left;
+ }
+
+ .chat-send .chat-menu hr {
+   background-color: #BDBDBD;
+   margin: 0 0 0 0;
+ }
+
+ .chat-menu .edit {
+   color: #2F80ED;
+   margin: 11px 17px;
+   cursor: pointer;
+ }
+
+ .chat-menu .delete {
+   color: #EB5757;
+   margin-top: 11px;
+   margin-bottom: 11px;
+   margin-left: 17px;
    cursor: pointer;
  }
 

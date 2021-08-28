@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "../../App.css";
-import { Input, Button, Loader } from "semantic-ui-react";
+import { Input, Button, Loader, Form } from "semantic-ui-react";
 
 import ChatBack from "../../assets/chat-back.svg";
 import ChatClose from "../../assets/chat-close.svg";
@@ -23,6 +23,23 @@ const monthNames = () => [
 ];
 
 const BubbleSend = (props) => {
+    const [isMenuOpen, setMenuOpen] = useState(false);
+    const menuRef = useRef(null);
+    function useOutsideAlerter(ref) {
+        useEffect(() => {
+            function handleClickOutside(event) {
+                if (ref.current && !ref.current.contains(event.target)) {
+                    // alert("You clicked outside of me!");
+                    setMenuOpen(false);
+                }
+            }
+            document.addEventListener("mousedown", handleClickOutside);
+            return () => {
+                document.removeEventListener("mousedown", handleClickOutside);
+            };
+        }, [ref]);
+    }
+    useOutsideAlerter(menuRef);
     return (
         <React.Fragment>
             <div className="chat-send">
@@ -33,7 +50,34 @@ const BubbleSend = (props) => {
                     ))}
                 <div className="content">
                     <div className="menu">
-                        <img src={ThreePoint} alt="Menu" />
+                        <img
+                            src={ThreePoint}
+                            alt="Menu"
+                            onClick={() => setMenuOpen(!isMenuOpen)}
+                        />
+                        {isMenuOpen && (
+                            <div className="chat-menu" ref={menuRef}>
+                                <div
+                                    className="edit"
+                                    onClick={() => {
+                                        console.log("Edit Clicked");
+                                        // setMenuOpen(!isMenuOpen);
+                                    }}
+                                >
+                                    Edit
+                                </div>
+                                <hr />
+                                <div
+                                    className="delete"
+                                    onClick={() => {
+                                        console.log("Delete Clicked");
+                                        // setMenuOpen(!isMenuOpen);
+                                    }}
+                                >
+                                    Delete
+                                </div>
+                            </div>
+                        )}
                     </div>
                     <div className="box">
                         <div className="message">{props.item.message}</div>
@@ -85,37 +129,18 @@ const RoomChat = (props) => {
     const [roomChat, setRoomChat] = useState("room-chat-start");
     const [isShowContent, setShowContent] = useState(false);
     const [isChatConnected, setChatConnected] = useState(true);
-
     const [chat, setChat] = useState(props.chatItem.history_chat);
-    const [messageInput, setMessageInput] = useState("");
-
+    const [messageInput, setMessageInput] = useState(null);
     const sizeContainer = () => {
         if (props.chatItem.type === "private") {
             return "container-private";
         } else if (props.chatItem.title.length > 71) {
             return "container-long-title";
-        } else {
-            return "container";
-        }
+        } else return "container";
     };
 
-    const _handleReadAllMessage = (e) => {
-        // eslint-disable-next-line array-callback-return
-        chat.map((item, index) => {
-            if (item.new_message === true) {
-                let newChat = [...chat];
-                let updateChat = chat[index];
-                updateChat.new_message = false;
-                newChat.splice(index, 1);
-                newChat[index] = updateChat;
-                setChat(newChat);
-            }
-        });
-    };
-
-    const clearState = () => {
+    const _clearState = () => {
         setMessageInput("");
-        setChat(props.chatItem.history_chat);
         _handleReadAllMessage();
         setTimeout(() => {
             setShowContent(false);
@@ -127,37 +152,54 @@ const RoomChat = (props) => {
         }, 400);
     };
 
-    const _handleChangeInput = (e) => {
-        setMessageInput(e.target.value);
+    const _handleReadAllMessage = (e) => {
+        // eslint-disable-next-line array-callback-return
+        chat.map((item, index) => {
+            if (item.new_message === true) {
+                let newChat = [...chat];
+                let updateChat = newChat[index];
+                updateChat.new_message = false;
+                // newChat.splice(index, 1);
+                newChat[index] = updateChat;
+                setChat(newChat);
+            }
+        });
     };
 
-    const getSendingTime = () => {
+    const _getSendingTime = () => {
         let today = new Date();
         let month = monthNames()[today.getMonth()];
         let date = month + " " + today.getDate() + ", " + today.getFullYear();
-        var minutes = today.getMinutes();
-        if (today.getMinutes().length === 1) {
-            minutes = "0" + today.getMinutes();
+        if (today.getHours() < 10) {
+            var hours = "0" + today.getHours();
+        } else {
+            hours = today.getHours();
         }
-        let time = today.getHours() + ":" + minutes;
+        if (today.getMinutes() < 10) {
+            var minutes = "0" + today.getMinutes();
+        } else {
+            minutes = today.getMinutes();
+        }
+        let time = hours + ":" + minutes;
         return { date: date, time: time };
     };
 
     const _handleSending = (e) => {
-        if (messageInput === "") {
+        if (messageInput === null || messageInput.match(/^ *$/) !== null) {
+            setMessageInput("");
             return;
         }
-        let sendingTime = getSendingTime();
+        let sending_time = _getSendingTime();
         let send_message = {
-            date: sendingTime.date,
-            time: sendingTime.time,
+            date: sending_time.date,
+            time: sending_time.time,
             type: "send",
-            sender: "Claren",
-            font_color: "#9B51E0",
-            color: "#EEDCFF",
-            to: "-",
+            // sender: "Claren",
+            // font_color: "#9B51E0",
+            // color: "#EEDCFF",
+            // to: "-",
             message: messageInput,
-            new_message: false,
+            // new_message: false,
         };
         setMessageInput("");
         _handleReadAllMessage();
@@ -165,18 +207,16 @@ const RoomChat = (props) => {
     };
 
     useEffect(() => {
-        if (props.isRoomChatShow === true) {
-            var timer = setTimeout(() => {
-                setRoomChat("room-chat");
-            }, 300);
-            var timer2 = setTimeout(() => {
-                setShowContent(true);
-            }, 500);
-            var timer3 = setTimeout(() => {
-                setChatConnected(false);
-            }, 2000);
-            return () => clearTimeout(timer, timer2, timer3);
-        }
+        let timer = setTimeout(() => {
+            setRoomChat("room-chat");
+        }, 300);
+        let timer2 = setTimeout(() => {
+            setShowContent(true);
+        }, 500);
+        let timer3 = setTimeout(() => {
+            setChatConnected(false);
+        }, 2000);
+        return () => clearTimeout(timer, timer2, timer3);
     });
 
     return (
@@ -188,7 +228,7 @@ const RoomChat = (props) => {
                             <div
                                 className="back"
                                 onClick={() => {
-                                    clearState();
+                                    _clearState();
                                 }}
                             >
                                 <img src={ChatBack} alt="ChatBack" />
@@ -207,7 +247,7 @@ const RoomChat = (props) => {
                             <div
                                 className="close"
                                 onClick={() => {
-                                    clearState();
+                                    _clearState();
                                 }}
                             >
                                 <img src={ChatClose} alt="ChatClose" />
@@ -264,7 +304,7 @@ const RoomChat = (props) => {
                             </div>
                         )}
                         <div className="chat-footer">
-                            <form>
+                            <Form>
                                 <Input
                                     focus
                                     type="text"
@@ -274,7 +314,9 @@ const RoomChat = (props) => {
                                         marginRight: "13px",
                                     }}
                                     value={messageInput}
-                                    onChange={_handleChangeInput}
+                                    onChange={(e) =>
+                                        setMessageInput(e.target.value)
+                                    }
                                 />
                                 <Button
                                     primary
@@ -287,7 +329,7 @@ const RoomChat = (props) => {
                                 >
                                     Send
                                 </Button>
-                            </form>
+                            </Form>
                         </div>
                     </div>
                 )}
