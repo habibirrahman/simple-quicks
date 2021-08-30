@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Checkbox, Input } from "semantic-ui-react";
-// import Calendar from "react-calendar";
-// import "react-calendar/dist/Calendar.css";
 import "../../App.css";
 
 import ExpandUp from "../../assets/expand-up.svg";
@@ -9,23 +7,27 @@ import ExpandDown from "../../assets/expand-down.svg";
 import ThreePoint from "../../assets/three-point.svg";
 import ClockGray from "../../assets/clock-gray.svg";
 import Clock from "../../assets/clock.svg";
-// import CalendarIcon from "../../assets/calendar.svg";
+import PenGray from "../../assets/pen-gray.svg";
 import Pen from "../../assets/pen.svg";
+// import CalendarIcon from "../../assets/calendar.svg";
 
 const daysOfMonth = () => [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
 const TaskItem = (props) => {
-    const [expandButton, setExpandButton] = useState(false);
+    const [expandButton, setExpandButton] = useState(true);
     const [checkboxValue, setCheckboxValue] = useState(false);
     const [isLimitShow, setLimitShow] = useState(!checkboxValue);
     const [isMenuOpen, setMenuOpen] = useState(false);
 
-    const [date, setDate] = useState("30/08/2021");
+    const [date, setDate] = useState("");
     const [dateInput, setDateInput] = useState("");
     const [remaining, setRemaining] = useState("");
 
+    const [desc, setDesc] = useState("");
+    const [descInput, setDescInput] = useState("");
+    const [editDesc, setEditDesc] = useState(false);
+
     const menuRef = useRef(null);
-    const calendarRef = useRef(null);
 
     const _handleCheckbox = (e, { checked }) => {
         setCheckboxValue(checked);
@@ -49,7 +51,6 @@ const TaskItem = (props) => {
     }
 
     useOutsideAlerter(menuRef);
-    useOutsideAlerter(calendarRef);
 
     const _getDateFormatFromInput = (e) => {
         let year = e[0] + e[1] + e[2] + e[3];
@@ -104,7 +105,24 @@ const TaskItem = (props) => {
         _handleSetRemaining(input);
     };
 
+    const _handleDescInput = (e) => {
+        if (e.keyCode === 13 && e.shiftKey === false) {
+            setDesc(descInput);
+            setEditDesc(false);
+        }
+    };
+
     useEffect(() => {
+        if (desc === "") {
+            return;
+        }
+        setDescInput(desc);
+    }, [desc]);
+
+    useEffect(() => {
+        if (date === "") {
+            return;
+        }
         let data = _getDateFormatFromData(date);
         setDateInput(data.year + "-" + data.month + "-" + data.day);
         _handleSetRemaining(data);
@@ -180,9 +198,8 @@ const TaskItem = (props) => {
                                 <div className="date-value">{date}</div>
                                 <img src={CalendarIcon} alt="Calendar" />
                             </div> */}
-                            <div className="set-calendar" ref={calendarRef}>
+                            <div className="set-calendar">
                                 <Input
-                                    // icon="calendar outline"
                                     type="date"
                                     placeholder="Set Date"
                                     value={dateInput}
@@ -191,18 +208,44 @@ const TaskItem = (props) => {
                             </div>
                         </div>
                         <div className="description">
-                            <img src={Pen} alt="Pen" />
-                            <div className="set-description">
-                                Closing off this case since this application has
-                                been cancelled. No one really understand how
-                                this case could possibly be cancelled. The
-                                options and the documents within this document
-                                were totally a guaranteed for a success!
-                            </div>
+                            {desc === "" ? (
+                                <img
+                                    src={PenGray}
+                                    alt="Pen"
+                                    onClick={() => setEditDesc(!editDesc)}
+                                />
+                            ) : (
+                                <img
+                                    src={Pen}
+                                    alt="Pen"
+                                    onClick={() => setEditDesc(!editDesc)}
+                                />
+                            )}
+                            {!editDesc ? (
+                                <div
+                                    className="set-description"
+                                    onClick={() => setEditDesc(!editDesc)}
+                                >
+                                    {desc === "" ? "No Description" : desc}
+                                </div>
+                            ) : (
+                                <div className="set-description-input">
+                                    <textarea
+                                        name="desc"
+                                        cols="65"
+                                        rows="5"
+                                        placeholder="Type a new description ..."
+                                        value={descInput}
+                                        onChange={(e) =>
+                                            setDescInput(e.target.value)
+                                        }
+                                        onKeyDown={_handleDescInput}
+                                    ></textarea>
+                                </div>
+                            )}
                         </div>
                     </div>
                 )}
-
                 <hr className="devider" />
             </div>
         </React.Fragment>
