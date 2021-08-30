@@ -8,15 +8,52 @@ import InboxIcon from "../../assets/inbox.svg";
 import TaskOpen from "../../assets/task-open.svg";
 import BackIcon from "../../assets/back.svg";
 
-// const taskDataDummy = () => [
-//     {
-//         title: null,
-//         dateline: null,
-//         description: null,
-//         completed: false,
-//         type: "My Tasks",
-//     },
-// ];
+const taskDataDummy = () => [
+    {
+        title: "Assign 3 homework to Client A",
+        deadline: "02/06/2021",
+        description:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        completed: true,
+        type: "My Tasks",
+        tag: [],
+    },
+    {
+        title: "Contact Mr Caleb - video conference?",
+        deadline: "03/06/2021",
+        description:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        completed: true,
+        type: "My Tasks",
+        tag: [],
+    },
+    {
+        title: "Set up appointment with Dr Blake",
+        deadline: "22/09/2021",
+        description: "",
+        completed: false,
+        type: "My Tasks",
+        tag: [],
+    },
+    {
+        title: "Set up documentation report for several Cases : Case 145443, Case 192829 and Case 182203",
+        deadline: "14/09/2021",
+        description:
+            "All Cases must include all payment transactions, all documents and forms filled. All conversations in comments and messages in channels and emails should be provided as well in.",
+        completed: false,
+        type: "My Tasks",
+        tag: [],
+    },
+    {
+        title: "Close off Case #012920- RODRIGUES, Amiguel",
+        deadline: "12/09/2021",
+        description:
+            "Closing off this case since this application has been cancelled. No one really understand how this case could possibly be cancelled. The options and the documents within this document were totally a guaranteed for a success!",
+        completed: false,
+        type: "My Tasks",
+        tag: [],
+    },
+];
 
 const getOptions = () => [
     {
@@ -39,7 +76,7 @@ const getOptions = () => [
 const Task = (props) => {
     const [isTaskContentShow, setTaskContentShow] = useState(false);
     const [dropdownValue, setDropdownValue] = useState(getOptions()[0].text);
-    // expandButton = false: close, true: open
+    const dataDummy = taskDataDummy().reverse();
 
     // const [isContentShow, setContentShow] = useState(false);
     const _handleChangeDropdown = (e, { value }) => {
@@ -85,9 +122,9 @@ const Task = (props) => {
                 </Loader> */}
                 {isTaskContentShow && (
                     <div className="task-content">
-                        <TaskItem />
-                        <TaskItem />
-                        <TaskItem />
+                        {dataDummy.map((item, index) => (
+                            <TaskItem key={index} data={item} />
+                        ))}
                     </div>
                 )}
             </div>

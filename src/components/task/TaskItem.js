@@ -14,18 +14,19 @@ import Pen from "../../assets/pen.svg";
 const daysOfMonth = () => [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
 const TaskItem = (props) => {
-    const [expandButton, setExpandButton] = useState(true);
-    const [checkboxValue, setCheckboxValue] = useState(false);
+    const [expandButton, setExpandButton] = useState(!props.data.completed);
+    const [checkboxValue, setCheckboxValue] = useState(props.data.completed);
     const [isLimitShow, setLimitShow] = useState(!checkboxValue);
     const [isMenuOpen, setMenuOpen] = useState(false);
 
-    const [date, setDate] = useState("");
+    const [date, setDate] = useState(props.data.deadline);
     const [dateInput, setDateInput] = useState("");
     const [remaining, setRemaining] = useState("");
 
-    const [desc, setDesc] = useState("");
+    const [desc, setDesc] = useState(props.data.description);
     const [descInput, setDescInput] = useState("");
     const [editDesc, setEditDesc] = useState(false);
+    const [textRows, setTextRows] = useState(3);
 
     const menuRef = useRef(null);
 
@@ -113,6 +114,11 @@ const TaskItem = (props) => {
     };
 
     useEffect(() => {
+        let length = descInput.length;
+        if (length > 50) setTextRows(length / 50 + 2);
+    }, [descInput]);
+
+    useEffect(() => {
         if (desc === "") {
             return;
         }
@@ -134,6 +140,7 @@ const TaskItem = (props) => {
                 <div className="info">
                     <div className="left">
                         <Checkbox
+                            checked={checkboxValue}
                             style={{ marginTop: "1px" }}
                             onChange={_handleCheckbox}
                         />
@@ -142,8 +149,7 @@ const TaskItem = (props) => {
                                 checkboxValue ? "title-checked" : "title"
                             }
                         >
-                            Set up documentation report for several Cases : Case
-                            145443, Case 192829 and Case 182203
+                            {props.data.title}
                         </div>
                     </div>
                     <div className="right">
@@ -233,7 +239,7 @@ const TaskItem = (props) => {
                                     <textarea
                                         name="desc"
                                         cols="65"
-                                        rows="5"
+                                        rows={textRows}
                                         placeholder="Type a new description ..."
                                         value={descInput}
                                         onChange={(e) =>

@@ -138,7 +138,7 @@
    padding: 24px 32px;
    background-color: #FFFFFF;
    width: 720px;
-   height: 640px;
+   height: 740px;
    position: absolute;
    bottom: 94px;
    right: 4px;
@@ -149,7 +149,7 @@
  .inbox-container {
    padding: 0 10px 0 0;
    width: 676px;
-   height: 530px;
+   height: 630px;
    overflow-x: hidden;
    overflow-y: scroll;
  }
@@ -255,7 +255,7 @@
    padding: 24px 32px;
    background-color: #FFFFFF;
    width: 720px;
-   height: 640px;
+   height: 740px;
    position: absolute;
    bottom: 0px;
    right: 0px;
@@ -320,7 +320,7 @@
    position: absolute;
    bottom: 75px;
    padding: 0 10px 0 0;
-   height: 474px;
+   height: 574px;
    width: 676px;
    overflow-x: hidden;
    overflow-y: scroll;
@@ -330,7 +330,7 @@
    position: absolute;
    bottom: 75px;
    padding: 0 10px 0 0;
-   height: 484px;
+   height: 584px;
    width: 676px;
    overflow-x: hidden;
    overflow-y: scroll;
@@ -340,7 +340,7 @@
    position: absolute;
    bottom: 75px;
    padding: 0 10px 0 0;
-   height: 456px;
+   height: 556px;
    width: 676px;
    overflow-x: hidden;
    overflow-y: scroll;
@@ -613,7 +613,7 @@
    padding: 24px 32px;
    background-color: #FFFFFF;
    width: 720px;
-   height: 640px;
+   height: 740px;
    position: absolute;
    bottom: 94px;
    right: 4px;
@@ -654,7 +654,7 @@
    margin: 22px 0 0 0;
    padding: 0 10px 0 0;
    width: 676px;
-   height: 530px;
+   height: 630px;
    overflow-x: hidden;
    overflow-y: scroll;
  }
@@ -762,7 +762,7 @@
    margin: 0 18px 0 0;
  }
 
- .task-content .set-date {
+ /* .task-content .set-date {
    padding: 0 12px 0 14px;
    display: flex;
    justify-content: space-between;
@@ -777,10 +777,10 @@
  .task-content .set-date img {
    width: 16px;
    margin: 0
- }
+ } */
 
- .task-content .set-calendar input{
-   padding: 11px 14px 11px 14px;
+ .task-content .set-calendar {
+   color: #4F4F4F;
  }
 
  .task-content .description {
@@ -791,28 +791,42 @@
  }
 
  .task-content .description img {
-   margin: 13px 2px;
+   margin: 15px 20px 15px 2px;
    cursor: pointer;
  }
 
  .task-content .set-description {
-   margin: 12px 0 0 25px;
+   margin: 15px 0 0 0;
    width: 543px;
    text-align: justify;
    text-justify: inter-word;
    cursor: pointer;
+   font-size: 16px;
+   font-style: normal;
+   font-weight: 400;
+   line-height: 19px;
+   letter-spacing: 0em;
+   color: #4F4F4F;
  }
 
  .task-content .set-description-input {
-   margin: 8px 0 0 18px;
+   margin: 11px 0 0 -6px;
    width: 543px;
  }
 
  .task-content .set-description-input textarea {
    border: 1px solid #E0E0E0;
    border-radius: 5px;
-   padding: 5px 7px;
+   padding: 5px;
+   text-align: justify;
+   text-justify: inter-word;
    width: 543px;
+   font-size: 16px;
+   font-style: normal;
+   font-weight: 400;
+   line-height: 19px;
+   letter-spacing: 0em;
+   color: #4F4F4F;
  }
 
  .task-content .devider {
