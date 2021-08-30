@@ -14,16 +14,21 @@ import Pen from "../../assets/pen.svg";
 const daysOfMonth = () => [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
 const TaskItem = (props) => {
-    const [expandButton, setExpandButton] = useState(!props.data.completed);
-    const [checkboxValue, setCheckboxValue] = useState(props.data.completed);
+    const [expandButton, setExpandButton] = useState(!props.item.completed);
+    const [checkboxValue, setCheckboxValue] = useState(props.item.completed);
     const [isLimitShow, setLimitShow] = useState(!checkboxValue);
     const [isMenuOpen, setMenuOpen] = useState(false);
 
-    const [date, setDate] = useState(props.data.deadline);
+    const [title, setTitle] = useState(props.item.title);
+    const [titleInput, setTitleInput] = useState("");
+    const [editTitle, setEditTitle] = useState(false);
+
+    const [date, setDate] = useState(props.item.deadline);
     const [dateInput, setDateInput] = useState("");
+
     const [remaining, setRemaining] = useState("");
 
-    const [desc, setDesc] = useState(props.data.description);
+    const [desc, setDesc] = useState(props.item.description);
     const [descInput, setDescInput] = useState("");
     const [editDesc, setEditDesc] = useState(false);
     const [textRows, setTextRows] = useState(3);
@@ -34,6 +39,15 @@ const TaskItem = (props) => {
         setCheckboxValue(checked);
         setLimitShow(!checked);
         checked && setExpandButton(false);
+    };
+
+    const _handleTitleInput = (e) => {
+        if (e.keyCode === 13 && e.shiftKey === false) {
+            setTitle(titleInput);
+            setEditTitle(false);
+            // set props
+            props.item.title = titleInput;
+        }
     };
 
     function useOutsideAlerter(ref) {
@@ -104,14 +118,25 @@ const TaskItem = (props) => {
         setDateInput(e.target.value);
         setDate(input.day + "/" + input.month + "/" + input.year);
         _handleSetRemaining(input);
+        // set props
+        props.item.deadline = input.day + "/" + input.month + "/" + input.year;
     };
 
     const _handleDescInput = (e) => {
         if (e.keyCode === 13 && e.shiftKey === false) {
             setDesc(descInput);
             setEditDesc(false);
+            // set props
+            props.item.description = descInput;
         }
     };
+
+    useEffect(() => {
+        if (title === "") {
+            return "";
+        }
+        setTitleInput(title);
+    }, [title]);
 
     useEffect(() => {
         let length = descInput.length;
@@ -120,14 +145,14 @@ const TaskItem = (props) => {
 
     useEffect(() => {
         if (desc === "") {
-            return;
+            return "";
         }
         setDescInput(desc);
     }, [desc]);
 
     useEffect(() => {
         if (date === "") {
-            return;
+            return setDateInput("");
         }
         let data = _getDateFormatFromData(date);
         setDateInput(data.year + "-" + data.month + "-" + data.day);
@@ -144,13 +169,47 @@ const TaskItem = (props) => {
                             style={{ marginTop: "1px" }}
                             onChange={_handleCheckbox}
                         />
-                        <div
-                            className={
-                                checkboxValue ? "title-checked" : "title"
-                            }
-                        >
-                            {props.data.title}
-                        </div>
+                        {!editTitle ? (
+                            <div>
+                                {title === "" ? (
+                                    <div
+                                        className="title-unset"
+                                        onClick={() => setEditTitle(true)}
+                                    >
+                                        Type Task Title
+                                    </div>
+                                ) : (
+                                    <>
+                                        {checkboxValue ? (
+                                            <div className="title-checked">
+                                                {title}
+                                            </div>
+                                        ) : (
+                                            <div
+                                                className="title"
+                                                onClick={() =>
+                                                    setEditTitle(true)
+                                                }
+                                            >
+                                                {title}
+                                            </div>
+                                        )}
+                                    </>
+                                )}
+                            </div>
+                        ) : (
+                            <div className="title-input">
+                                <input
+                                    type="text"
+                                    placeholder="Type Task Title"
+                                    value={titleInput}
+                                    onChange={(e) =>
+                                        setTitleInput(e.target.value)
+                                    }
+                                    onKeyDown={_handleTitleInput}
+                                />
+                            </div>
+                        )}
                     </div>
                     <div className="right">
                         {isLimitShow && (
@@ -196,7 +255,6 @@ const TaskItem = (props) => {
                                     alt="Clock"
                                 />
                             )}
-
                             {/* <div
                                 className="set-date"
                                 onClick={() => setCalendarOpen(!isCalendarOpen)}
@@ -230,7 +288,7 @@ const TaskItem = (props) => {
                             {!editDesc ? (
                                 <div
                                     className="set-description"
-                                    onClick={() => setEditDesc(!editDesc)}
+                                    onClick={() => setEditDesc(true)}
                                 >
                                     {desc === "" ? "No Description" : desc}
                                 </div>

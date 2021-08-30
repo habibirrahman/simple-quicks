@@ -10,27 +10,10 @@ import BackIcon from "../../assets/back.svg";
 
 const taskDataDummy = () => [
     {
-        title: "Assign 3 homework to Client A",
-        deadline: "02/06/2021",
+        title: "Close off Case #012920- RODRIGUES, Amiguel",
+        deadline: "12/09/2021",
         description:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        completed: true,
-        type: "My Tasks",
-        tag: [],
-    },
-    {
-        title: "Contact Mr Caleb - video conference?",
-        deadline: "03/06/2021",
-        description:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        completed: true,
-        type: "My Tasks",
-        tag: [],
-    },
-    {
-        title: "Set up appointment with Dr Blake",
-        deadline: "22/09/2021",
-        description: "",
+            "Closing off this case since this application has been cancelled. No one really understand how this case could possibly be cancelled. The options and the documents within this document were totally a guaranteed for a success!",
         completed: false,
         type: "My Tasks",
         tag: [],
@@ -45,11 +28,28 @@ const taskDataDummy = () => [
         tag: [],
     },
     {
-        title: "Close off Case #012920- RODRIGUES, Amiguel",
-        deadline: "12/09/2021",
-        description:
-            "Closing off this case since this application has been cancelled. No one really understand how this case could possibly be cancelled. The options and the documents within this document were totally a guaranteed for a success!",
+        title: "Set up appointment with Dr Blake",
+        deadline: "22/09/2021",
+        description: "",
         completed: false,
+        type: "My Tasks",
+        tag: [],
+    },
+    {
+        title: "Contact Mr Caleb - video conference?",
+        deadline: "03/06/2021",
+        description:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        completed: true,
+        type: "My Tasks",
+        tag: [],
+    },
+    {
+        title: "Assign 3 homework to Client A",
+        deadline: "02/06/2021",
+        description:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        completed: true,
         type: "My Tasks",
         tag: [],
     },
@@ -76,21 +76,39 @@ const getOptions = () => [
 const Task = (props) => {
     const [isTaskContentShow, setTaskContentShow] = useState(false);
     const [dropdownValue, setDropdownValue] = useState(getOptions()[0].text);
-    const dataDummy = taskDataDummy().reverse();
+    const [dataDummy, setDataDummy] = useState(taskDataDummy());
 
     // const [isContentShow, setContentShow] = useState(false);
     const _handleChangeDropdown = (e, { value }) => {
         setDropdownValue(value);
         console.log(value);
     };
+
     const _handleNewTask = () => {
-        console.log("new task");
+        let new_task = [
+            {
+                title: "",
+                deadline: "",
+                description: "",
+                completed: false,
+                type: "",
+                tag: [],
+            },
+        ];
+
+        // eslint-disable-next-line array-callback-return
+        dataDummy.map((item, index) => {
+            new_task[index + 1] = item;
+        });
+        console.log(new_task);
+        setTaskContentShow(false);
+        return setDataDummy(new_task);
     };
 
     useEffect(() => {
         let timer = setTimeout(() => {
             setTaskContentShow(true);
-        }, 300);
+        }, 400);
         return () => clearTimeout(timer);
     });
 
@@ -123,7 +141,7 @@ const Task = (props) => {
                 {isTaskContentShow && (
                     <div className="task-content">
                         {dataDummy.map((item, index) => (
-                            <TaskItem key={index} data={item} />
+                            <TaskItem key={index} item={item} />
                         ))}
                     </div>
                 )}

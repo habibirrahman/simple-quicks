@@ -667,6 +667,8 @@
 
  .task-content .info .left {
    display: flex;
+   align-items: center;
+   align-content: center;
  }
 
  .task-content .title {
@@ -678,6 +680,7 @@
    line-height: 19px;
    letter-spacing: 0em;
    text-align: left;
+   cursor: pointer;
  }
 
  .task-content .title-checked {
@@ -691,6 +694,34 @@
    text-align: left;
    text-decoration: line-through;
    color: #828282
+ }
+
+ .task-content .title-unset {
+   margin: 0 0 0 22px;
+   border: 1px solid #828282;
+   border-radius: 5px;
+   width: 380px;
+   height: 40px;
+   padding: 10px 14px;
+   font-size: 16px;
+   font-style: normal;
+   font-weight: 400;
+   line-height: 19px;
+   letter-spacing: 0em;
+   text-align: left;
+   cursor: pointer;
+ }
+
+ .task-content .title-input {
+   margin: 0 0 0 22px;
+   /* border: 1px solid #828282; */
+ }
+
+ .task-content .title-input input {
+   padding: 10px 14px;
+   border: 1px solid #828282;
+   border-radius: 5px;
+   width: 380px;
  }
 
  .task-content .info .right {
