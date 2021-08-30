@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../../App.css";
-import { Dropdown, Button } from "semantic-ui-react";
+import { Dropdown, Button, Loader } from "semantic-ui-react";
 
 import TaskItem from "./TaskItem.js";
 
@@ -15,7 +15,7 @@ const taskDataDummy = () => [
         description:
             "Closing off this case since this application has been cancelled. No one really understand how this case could possibly be cancelled. The options and the documents within this document were totally a guaranteed for a success!",
         completed: false,
-        type: "My Tasks",
+        type: "Personal Errands",
         tag: [],
     },
     {
@@ -50,7 +50,7 @@ const taskDataDummy = () => [
         description:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
         completed: true,
-        type: "My Tasks",
+        type: "Urgent To-Do",
         tag: [],
     },
 ];
@@ -77,11 +77,13 @@ const Task = (props) => {
     const [isTaskContentShow, setTaskContentShow] = useState(false);
     const [dropdownValue, setDropdownValue] = useState(getOptions()[0].text);
     const [dataDummy, setDataDummy] = useState(taskDataDummy());
+    const [isLoadingShow, setLoadingShow] = useState(true);
 
     // const [isContentShow, setContentShow] = useState(false);
     const _handleChangeDropdown = (e, { value }) => {
         setDropdownValue(value);
-        console.log(value);
+        setTaskContentShow(false);
+        setLoadingShow(true);
     };
 
     const _handleNewTask = () => {
@@ -91,32 +93,46 @@ const Task = (props) => {
                 deadline: "",
                 description: "",
                 completed: false,
-                type: "",
+                type: dropdownValue,
                 tag: [],
             },
         ];
 
         // eslint-disable-next-line array-callback-return
-        dataDummy.map((item, index) => {
-            new_task[index + 1] = item;
-        });
+        // dataDummy.map((item, index) => {
+        //     new_task[index + 1] = item;
+        // });
+        new_task = [...new_task, ...dataDummy];
         console.log(new_task);
-        setTaskContentShow(false);
+        // setTaskContentShow(false);
         return setDataDummy(new_task);
     };
 
     useEffect(() => {
         let timer = setTimeout(() => {
             setTaskContentShow(true);
-        }, 400);
+        }, 500);
         return () => clearTimeout(timer);
-    });
+    }, [dataDummy]);
+
+    useEffect(() => {
+        let timer = setTimeout(() => {
+            setLoadingShow(false);
+            setTaskContentShow(true);
+        }, 500);
+        return () => clearTimeout(timer);
+    }, [isLoadingShow, dropdownValue]);
 
     return (
         <React.Fragment>
             {/* box of task */}
             <div className={props.taskCard}>
                 <div className="task-header">
+                    {/* <div className="dropdown"></div>
+                    <div className="dropdown-open">
+                        <div className="dropdown-item-1"></div>
+                        <div className="dropdown-item-2"></div>
+                    </div> */}
                     <Dropdown
                         selection
                         options={getOptions()}
@@ -134,14 +150,23 @@ const Task = (props) => {
                         New Task
                     </Button>
                 </div>
-                {/* <Loader className="loading" active>
-                    Task Management Service <br />
-                    Coming Soon ...
-                </Loader> */}
+                {isLoadingShow && (
+                    <Loader className="loading" active>
+                        Loading Task List ...
+                    </Loader>
+                )}
                 {isTaskContentShow && (
                     <div className="task-content">
                         {dataDummy.map((item, index) => (
-                            <TaskItem key={index} item={item} />
+                            <div key={index}>
+                                {(item.type === dropdownValue ||
+                                    item.type === "") && (
+                                    <TaskItem
+                                        item={item}
+                                        type={dropdownValue}
+                                    />
+                                )}
+                            </div>
                         ))}
                     </div>
                 )}
