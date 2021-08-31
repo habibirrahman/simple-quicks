@@ -56,12 +56,11 @@ const BubbleSend = (props) => {
                             onClick={() => setMenuOpen(!isMenuOpen)}
                         />
                         {isMenuOpen && (
-                            <div className="chat-menu" ref={menuRef}>
+                            <div className="chat-menu-send" ref={menuRef}>
                                 <div
                                     className="edit"
                                     onClick={() => {
                                         console.log("Edit Clicked");
-                                        // setMenuOpen(!isMenuOpen);
                                     }}
                                 >
                                     Edit
@@ -71,7 +70,6 @@ const BubbleSend = (props) => {
                                     className="delete"
                                     onClick={() => {
                                         console.log("Delete Clicked");
-                                        // setMenuOpen(!isMenuOpen);
                                     }}
                                 >
                                     Delete
@@ -90,6 +88,23 @@ const BubbleSend = (props) => {
 };
 
 const BubbleReceive = (props) => {
+    const [isMenuOpen, setMenuOpen] = useState(false);
+    const menuRef = useRef(null);
+    function useOutsideAlerter(ref) {
+        useEffect(() => {
+            function handleClickOutside(event) {
+                if (ref.current && !ref.current.contains(event.target)) {
+                    // alert("You clicked outside of me!");
+                    setMenuOpen(false);
+                }
+            }
+            document.addEventListener("mousedown", handleClickOutside);
+            return () => {
+                document.removeEventListener("mousedown", handleClickOutside);
+            };
+        }, [ref]);
+    }
+    useOutsideAlerter(menuRef);
     return (
         <React.Fragment>
             <div className="chat-receive">
@@ -116,9 +131,34 @@ const BubbleReceive = (props) => {
                         <div className="message">{props.item.message}</div>
                         <div className="time">{props.item.time}</div>
                     </div>
-                    {/* <div className="menu">
-                        <img src={ThreePoint} alt="Menu" />
-                    </div> */}
+                    <div className="menu">
+                        <img
+                            src={ThreePoint}
+                            alt="Menu"
+                            onClick={() => setMenuOpen(!isMenuOpen)}
+                        />
+                        {isMenuOpen && (
+                            <div className="chat-menu-receive" ref={menuRef}>
+                                <div
+                                    className="item"
+                                    onClick={() => {
+                                        console.log("Share Clicked");
+                                    }}
+                                >
+                                    Share
+                                </div>
+                                <hr />
+                                <div
+                                    className="item"
+                                    onClick={() => {
+                                        console.log("Reply Clicked");
+                                    }}
+                                >
+                                    Reply
+                                </div>
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
         </React.Fragment>

@@ -440,7 +440,8 @@
    cursor: pointer;
  }
 
- .chat-send .chat-menu {
+ .chat-send .chat-menu-send {
+  z-index: 999;
    border: 1px solid #BDBDBD;
    border-radius: 5px;
    position: absolute;
@@ -454,18 +455,18 @@
    text-align: left;
  }
 
- .chat-send .chat-menu hr {
+ .chat-send .chat-menu-send hr {
    background-color: #BDBDBD;
    margin: 0 0 0 0;
  }
 
- .chat-menu .edit {
+ .chat-menu-send .edit {
    color: #2F80ED;
    margin: 11px 17px;
    cursor: pointer;
  }
 
- .chat-menu .delete {
+ .chat-menu-send .delete {
    margin: 11px 17px;
    color: #EB5757;
    cursor: pointer;
@@ -524,6 +525,36 @@
 
  .chat-receive .content .menu {
    margin: 9px;
+ }
+
+ .chat-receive .content .menu img {
+   cursor: pointer;
+ }
+
+ .chat-receive .chat-menu-receive {
+   z-index: 999;
+   margin: 0 0 0 -108px;
+   border: 1px solid #BDBDBD;
+   border-radius: 5px;
+   position: absolute;
+   background-color: #FFFFFF;
+   width: 126px;
+   font-size: 16px;
+   font-style: normal;
+   font-weight: 400;
+   line-height: 19px;
+   letter-spacing: 0em;
+   text-align: left;
+ }
+
+ .chat-receive .chat-menu-receive hr {
+   background-color: #BDBDBD;
+   margin: 0 0 0 0;
+ }
+
+ .chat-menu-receive .item {
+   color: #2F80ED;
+   margin: 11px 17px;
    cursor: pointer;
  }
 
