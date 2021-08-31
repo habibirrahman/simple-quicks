@@ -12,12 +12,12 @@ const Menu = (props) => {
     useEffect(() => {
         let timer = setTimeout(() => {
             setInboxStyle("inbox");
-        }, 100);
+        }, 200);
         let timer2 = setTimeout(() => {
             setTaskStyle("task");
-        }, 300);
+        }, 400);
         return () => clearTimeout(timer, timer2);
-    });
+    }, [inboxStyle, taskStyle]);
 
     return (
         <React.Fragment>
@@ -38,6 +38,7 @@ const Menu = (props) => {
                             props.onMenuOpen(false);
                             props.onSubmenuOpen(true);
                             props.onInboxOrTask(false);
+                            props.onStartQuicks(true);
                         }, 500);
                     }}
                 />
@@ -59,6 +60,7 @@ const Menu = (props) => {
                             props.onMenuOpen(false);
                             props.onSubmenuOpen(true);
                             props.onInboxOrTask(true);
+                            props.onStartQuicks(true);
                         }, 500);
                     }}
                 />
@@ -75,7 +77,6 @@ const Menu = (props) => {
                         setInboxStyle("inbox-start");
                     }, 300);
                     setTimeout(() => {
-                        props.onStartQuicks(true);
                         props.onMenuOpen(false);
                     }, 500);
                 }}

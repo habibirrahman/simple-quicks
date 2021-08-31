@@ -208,6 +208,8 @@ const Task = (props) => {
                         props.onBackIcon("back-menu-start");
                         props.onInboxCard("inbox-card-start");
                         props.onTaskCard("task-card-start");
+                        setTaskContentShow(false);
+                        setLoadingShow(true);
                     }, 200);
                     setTimeout(() => {
                         props.onMenuOpen(true);

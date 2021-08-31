@@ -24,7 +24,6 @@ const App = () => {
                         alt="Quicks"
                         onClick={() => {
                             setMenuOpen(true);
-                            setStartQuicks(false);
                         }}
                     />
                 )}
