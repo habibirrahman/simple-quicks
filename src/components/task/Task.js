@@ -75,11 +75,11 @@ const getOptions = () => [
 
 const Task = (props) => {
     const [isTaskContentShow, setTaskContentShow] = useState(false);
-    const [dropdownValue, setDropdownValue] = useState(getOptions()[0].text);
+    // const [dropdownValue, setDropdownValue] = useState(getOptions()[0].text);
+    const [dropdownValue, setDropdownValue] = useState("My Tasks");
     const [dataDummy, setDataDummy] = useState(taskDataDummy());
     const [isLoadingShow, setLoadingShow] = useState(true);
 
-    // const [isContentShow, setContentShow] = useState(false);
     const _handleChangeDropdown = (e, { value }) => {
         setDropdownValue(value);
         setTaskContentShow(false);
@@ -87,6 +87,7 @@ const Task = (props) => {
     };
 
     const _handleNewTask = () => {
+        setTaskContentShow(false);
         let new_task = [
             {
                 title: "",
@@ -97,31 +98,32 @@ const Task = (props) => {
                 tag: [],
             },
         ];
-
-        // eslint-disable-next-line array-callback-return
-        // dataDummy.map((item, index) => {
-        //     new_task[index + 1] = item;
-        // });
         new_task = [...new_task, ...dataDummy];
-        console.log(new_task);
-        // setTaskContentShow(false);
         return setDataDummy(new_task);
     };
 
+    const _handleDeleteTask = (e) => {
+        setTaskContentShow(false);
+        let deleted = [...dataDummy];
+        if (e !== -1) {
+            deleted.splice(e, 1);
+            setDataDummy(deleted);
+        }
+    };
+
     useEffect(() => {
-        let timer = setTimeout(() => {
+        if (!isLoadingShow) {
             setTaskContentShow(true);
-        }, 500);
-        return () => clearTimeout(timer);
-    }, [dataDummy]);
+        }
+    }, [dataDummy, isLoadingShow]);
 
     useEffect(() => {
         let timer = setTimeout(() => {
             setLoadingShow(false);
             setTaskContentShow(true);
-        }, 500);
+        }, 1000);
         return () => clearTimeout(timer);
-    }, [isLoadingShow, dropdownValue]);
+    }, [dropdownValue]);
 
     return (
         <React.Fragment>
@@ -162,8 +164,10 @@ const Task = (props) => {
                                 {(item.type === dropdownValue ||
                                     item.type === "") && (
                                     <TaskItem
+                                        index={index}
                                         item={item}
                                         type={dropdownValue}
+                                        onDeleteTask={_handleDeleteTask}
                                     />
                                 )}
                             </div>

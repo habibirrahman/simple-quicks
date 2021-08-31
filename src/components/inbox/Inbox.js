@@ -188,14 +188,10 @@ const Inbox = (props) => {
 
     useEffect(() => {
         let timer = setTimeout(() => {
-            if (props.inboxOrTask === true) {
-                setLoadingShow(false);
-                setChatsLoaded(true);
-            }
-        }, 1500);
-        return () => {
-            clearTimeout(timer);
-        };
+            setLoadingShow(false);
+            setChatsLoaded(true);
+        }, 1000);
+        return () => clearTimeout(timer);
     }, [props.inboxOrTask]);
 
     return (

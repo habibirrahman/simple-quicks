@@ -232,7 +232,21 @@ const TaskItem = (props) => {
                             {isMenuOpen && (
                                 <div className="task-menu" ref={menuRef}>
                                     <div className="menu">
-                                        <div className="delete">Delete</div>
+                                        <div
+                                            className="delete"
+                                            onClick={() => {
+                                                if (
+                                                    window.confirm(
+                                                        "Are you sure you wish to delete this task?"
+                                                    )
+                                                )
+                                                    props.onDeleteTask(
+                                                        props.index
+                                                    );
+                                            }}
+                                        >
+                                            Delete
+                                        </div>
                                     </div>
                                 </div>
                             )}
