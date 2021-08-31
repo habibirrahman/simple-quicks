@@ -54,7 +54,6 @@ const TaskItem = (props) => {
         useEffect(() => {
             function handleClickOutside(event) {
                 if (ref.current && !ref.current.contains(event.target)) {
-                    // alert("You clicked outside of me!");
                     setMenuOpen(false);
                 }
             }
@@ -269,13 +268,6 @@ const TaskItem = (props) => {
                                     alt="Clock"
                                 />
                             )}
-                            {/* <div
-                                className="set-date"
-                                onClick={() => setCalendarOpen(!isCalendarOpen)}
-                            >
-                                <div className="date-value">{date}</div>
-                                <img src={CalendarIcon} alt="Calendar" />
-                            </div> */}
                             <div className="set-calendar">
                                 <Input
                                     type="date"

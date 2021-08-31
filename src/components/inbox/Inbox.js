@@ -162,7 +162,6 @@ const inboxDataDummy = () => [
 ];
 
 const SearchBar = (props) => {
-    // const [results, setResult] = useState("");
     return (
         <React.Fragment>
             <Form>
@@ -184,7 +183,6 @@ const SearchBar = (props) => {
 const Inbox = (props) => {
     const [isLoadingShow, setLoadingShow] = useState(true);
     const [isChatsLoaded, setChatsLoaded] = useState(false);
-    // const [inboxData, setInboxData] = useState(inboxDataDummy());
 
     useEffect(() => {
         let timer = setTimeout(() => {

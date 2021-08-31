@@ -75,8 +75,7 @@ const getOptions = () => [
 
 const Task = (props) => {
     const [isTaskContentShow, setTaskContentShow] = useState(false);
-    // const [dropdownValue, setDropdownValue] = useState(getOptions()[0].text);
-    const [dropdownValue, setDropdownValue] = useState("My Tasks");
+    const [dropdownValue, setDropdownValue] = useState(getOptions()[0].text);
     const [dataDummy, setDataDummy] = useState(taskDataDummy());
     const [isLoadingShow, setLoadingShow] = useState(true);
 
@@ -130,11 +129,6 @@ const Task = (props) => {
             {/* box of task */}
             <div className={props.taskCard}>
                 <div className="task-header">
-                    {/* <div className="dropdown"></div>
-                    <div className="dropdown-open">
-                        <div className="dropdown-item-1"></div>
-                        <div className="dropdown-item-2"></div>
-                    </div> */}
                     <Dropdown
                         selection
                         options={getOptions()}
@@ -197,7 +191,6 @@ const Task = (props) => {
             </div>
 
             {/* submenu back button */}
-
             <img
                 src={BackIcon}
                 className={props.backIcon}
@@ -217,8 +210,8 @@ const Task = (props) => {
                     }, 400);
                 }}
             />
-            {/* open submenu */}
 
+            {/* open submenu */}
             <img src={TaskOpen} className="task-open" alt="TaskOpen" />
         </React.Fragment>
     );

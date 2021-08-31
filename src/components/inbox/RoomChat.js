@@ -29,7 +29,6 @@ const BubbleSend = (props) => {
         useEffect(() => {
             function handleClickOutside(event) {
                 if (ref.current && !ref.current.contains(event.target)) {
-                    // alert("You clicked outside of me!");
                     setMenuOpen(false);
                 }
             }
@@ -99,7 +98,6 @@ const BubbleReceive = (props) => {
         useEffect(() => {
             function handleClickOutside(event) {
                 if (ref.current && !ref.current.contains(event.target)) {
-                    // alert("You clicked outside of me!");
                     setMenuOpen(false);
                 }
             }
@@ -204,7 +202,6 @@ const RoomChat = (props) => {
                 let newChat = [...chat];
                 let updateChat = newChat[index];
                 updateChat.new_message = false;
-                // newChat.splice(index, 1);
                 newChat[index] = updateChat;
                 setChat(newChat);
             }
