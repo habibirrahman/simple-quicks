@@ -16,6 +16,10 @@ const InboxItem = (props) => {
         setChatItem(item);
     };
 
+    const _getLastElement = (e) => {
+        return e[e.length - 1];
+    };
+
     return (
         <React.Fragment>
             <div className="inbox-container">
@@ -42,13 +46,21 @@ const InboxItem = (props) => {
 
                             <div className="content">
                                 <div className="title">{item.title}</div>
-                                {item.type === "group" && (
-                                    <div className="sender">
-                                        {item.last_sender} :
-                                    </div>
-                                )}
+                                {item.type === "group" &&
+                                    _getLastElement(item.history_chat)
+                                        .sender !== "Claren" && (
+                                        <div className="sender">
+                                            {
+                                                _getLastElement(
+                                                    item.history_chat
+                                                ).sender
+                                            }
+                                        </div>
+                                    )}
                                 <div className="message">
-                                    {item.last_message}
+                                    {_getLastElement(item.history_chat)
+                                        .sender === "Claren" && <b>You : </b>}
+                                    {_getLastElement(item.history_chat).message}
                                 </div>
                             </div>
                             <div className="info">

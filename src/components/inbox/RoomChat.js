@@ -69,7 +69,12 @@ const BubbleSend = (props) => {
                                 <div
                                     className="delete"
                                     onClick={() => {
-                                        console.log("Delete Clicked");
+                                        if (
+                                            window.confirm(
+                                                "Are you sure you wish to delete this message?"
+                                            )
+                                        )
+                                            props.onDeleteMessage(props.index);
                                     }}
                                 >
                                     Delete
@@ -234,16 +239,27 @@ const RoomChat = (props) => {
             date: sending_time.date,
             time: sending_time.time,
             type: "send",
-            // sender: "Claren",
-            // font_color: "#9B51E0",
-            // color: "#EEDCFF",
-            // to: "-",
+            sender: "Claren",
+            font_color: "#9B51E0",
+            color: "#EEDCFF",
+            to: props.chatItem.title,
             message: messageInput,
-            // new_message: false,
+            new_message: false,
         };
         setMessageInput("");
         _handleReadAllMessage();
         setChat([...chat, send_message]);
+        // set props
+        props.chatItem.history_chat = [...chat, send_message];
+    };
+
+    const _handleDeleteMessage = (e) => {
+        let deleted = [...chat];
+        if (e !== -1) {
+            deleted.splice(e, 1);
+            setChat(deleted);
+            props.chatItem.history_chat.splice(e, 1);
+        }
     };
 
     useEffect(() => {
@@ -318,6 +334,9 @@ const RoomChat = (props) => {
                                             item={item}
                                             index={index}
                                             chat={chat}
+                                            onDeleteMessage={
+                                                _handleDeleteMessage
+                                            }
                                         />
                                     ) : (
                                         <BubbleReceive
